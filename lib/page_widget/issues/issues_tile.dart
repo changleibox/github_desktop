@@ -62,6 +62,9 @@ class IssuesTile extends StatelessWidget {
               );
               final isDark = color.computeLuminance() < 0.5;
               return WidgetSpan(
+                style: const TextStyle(
+                  decoration: TextDecoration.none,
+                ),
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 7,
@@ -82,6 +85,7 @@ class IssuesTile extends StatelessWidget {
                       color: isDark ? CupertinoColors.white : textColor,
                       fontWeight: FontWeight.w500,
                       height: 1.0,
+                      decoration: TextDecoration.none,
                     ),
                   ),
                 ),

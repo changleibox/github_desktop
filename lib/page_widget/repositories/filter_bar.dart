@@ -2,8 +2,10 @@
  * Copyright (c) 2021 CHANGLEI. All rights reserved.
  */
 
+import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:github_desktop/common/resources.dart';
+import 'package:github_desktop/widget/hover_outline_button.dart';
 import 'package:github_desktop/widget/prefix_filter_button.dart';
 import 'package:fluttericon/octicons_icons.dart';
 
@@ -153,33 +155,22 @@ class _RepositoriesFilterBarState extends State<RepositoriesFilterBar> {
           const SizedBox(
             width: 16,
           ),
-          Container(
-            decoration: primaryBtnBorderDecoration,
-            child: CupertinoButton(
-              borderRadius: primaryBorderRadius,
-              color: colorBtnPrimaryBg,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
+          HoverOutlineButton(
+            onPressed: () {},
+            minSize: 30,
+            primary: true,
+            child: const IconLabel(
+              leftIcon: Icon(
+                Octicons.repo,
+                size: 16,
               ),
-              minSize: 30,
-              onPressed: () {},
-              child: Row(
-                children: const [
-                  Icon(
-                    Octicons.repo,
-                    size: 16,
-                  ),
-                  SizedBox(
-                    width: 4,
-                  ),
-                  Text(
-                    'New',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
+              horizontalSpacing: 4,
+              label: Text(
+                'New',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ),

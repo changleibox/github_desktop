@@ -11,6 +11,9 @@ import 'package:flutter/cupertino.dart';
 /// 字体
 const fontFamilies = <String>['-apple-system', 'BlinkMacSystemFont', 'Segoe UI,Helvetica', 'Arial,sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji'];
 
+/// 主题色
+const primaryColor = Color(0xff0366d6);
+
 /// 背景色
 const colorBgTertiary = Color(0xfff6f8fa);
 
@@ -41,6 +44,9 @@ const colorInputBorder = Color(0xffe1e4e8);
 /// 按钮背景颜色
 const colorBtnPrimaryBg = Color(0xff2ea44f);
 
+/// 按钮hover背景色
+const colorBtnHoverPrimaryBg = Color(0xff259043);
+
 /// 按钮disabled背景颜色
 const colorBtnPrimaryDisabledBg = Color(0xff94d3a2);
 
@@ -68,6 +74,9 @@ const colorHeaderSearchPlaceholder = Color(0xffb4b5b6);
 /// 按钮背景色
 const colorBtnBg = Color(0xfffafbfc);
 
+/// 按钮hover背景色
+const colorBtnHoverBg = Color(0xfff3f4f6);
+
 /// 底部颜色
 const colorBorderBottom = Color(0xfff9826c);
 
@@ -94,6 +103,9 @@ const colorStateSelectedPrimary = Color(0xff0366d6);
 
 /// 时间线badge背景色
 const colorTimelineBadgeBg = Color(0xffe1e4e8);
+
+/// footer图标颜色
+const colorFooterInvertocatOcticon = Color(0xffd1d5da);
 
 /// 默认边框
 const primaryBorderSide = BorderSide(

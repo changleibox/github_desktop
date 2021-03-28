@@ -12,6 +12,8 @@ import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/github_gql/github_queries.data.gql.dart';
 import 'package:github_desktop/util/launch_utils.dart';
 import 'package:github_desktop/widget/auto_update_date.dart';
+import 'package:github_desktop/widget/hover_outline_button.dart';
+import 'package:github_desktop/widget/hover_region.dart';
 import 'package:github_desktop/widget/list_tile.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttericon/octicons_icons.dart';
@@ -178,36 +180,28 @@ class RepositoriesTile extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           direction: Axis.vertical,
           children: [
-            Container(
-              height: 28,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12,
-              ),
-              alignment: Alignment.center,
-              decoration: btnBorderDecoration,
-              child: CupertinoButton(
-                padding: EdgeInsets.zero,
-                minSize: 0,
-                borderRadius: primaryBorderRadius,
-                color: colorBtnBg,
-                onPressed: () {},
-                child: IconLabel(
-                  horizontalSpacing: 4,
-                  leftIcon: Icon(
-                    item.viewerHasStarred ? CupertinoIcons.star_fill : CupertinoIcons.star,
-                    size: 14,
-                    color: textStyle.color,
-                  ),
-                  label: Text(
-                    item.viewerHasStarred ? 'Unstar' : 'Star',
-                    style: textStyle.copyWith(
-                      height: 1,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
+            HoverRegion(
+              builder: (context, child, hover) {
+                return HoverOutlineButton(
+                  onPressed: () {},
+                  child: IconLabel(
+                    horizontalSpacing: 4,
+                    leftIcon: Icon(
+                      item.viewerHasStarred ? CupertinoIcons.star_fill : CupertinoIcons.star,
+                      size: 14,
+                      color: textStyle.color,
+                    ),
+                    label: Text(
+                      item.viewerHasStarred ? 'Unstar' : 'Star',
+                      style: textStyle.copyWith(
+                        height: 1,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
-                ),
-              ),
+                );
+              },
             ),
             _PastYearOfActivity(
               refs: item.refs,

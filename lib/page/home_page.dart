@@ -12,7 +12,7 @@ import 'package:github_desktop/page/repositories_page.dart';
 import 'package:github_desktop/page_widget/home/top_bar.dart';
 import 'package:github_desktop/page_widget/home/user_info.dart';
 import 'package:github_desktop/widget/divider.dart';
-import 'package:github_desktop/widget/footer.dart';
+import 'package:github_desktop/widget/footer_bar.dart';
 import 'package:github_desktop/widget/github_action_bar.dart';
 import 'package:github_desktop/widget/tab_swiching_view.dart';
 
@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       height: 40,
                     ),
-                    Footer(),
+                    FooterBar(),
                     const SizedBox(
                       height: 40,
                     ),

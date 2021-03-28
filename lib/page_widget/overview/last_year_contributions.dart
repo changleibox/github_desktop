@@ -7,12 +7,12 @@ import 'dart:math';
 import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttericon/octicons_icons.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/widget/calendar_heat_map.dart';
-import 'package:github_desktop/widget/cupertino_text_button.dart';
 import 'package:github_desktop/widget/divider.dart';
+import 'package:github_desktop/widget/hover_button.dart';
 import 'package:github_desktop/widget/support_dropdown_menu.dart';
-import 'package:fluttericon/octicons_icons.dart';
 
 /// Created by box on 3/27/21.
 ///
@@ -103,12 +103,12 @@ class _LastYearContributionsState extends State<LastYearContributions> {
                 dataBuilder: (dateTime, index) {
                   return _dataMap[dateTime];
                 },
-                action: CupertinoTextButton(
+                action: HoverButton(
                   onPressed: () {},
+                  foregroundColor: colorTextSecondary,
                   child: const Text(
                     'Learn how we count contributions.',
                     style: TextStyle(
-                      color: colorTextSecondary,
                       fontSize: 12,
                     ),
                   ),
@@ -174,19 +174,22 @@ class _ContributionSettings extends StatelessWidget {
           ],
         );
       },
-      child: const IconLabel(
-        horizontalSpacing: 2,
-        label: Text(
-          'Contribution settings',
-          style: TextStyle(
-            fontSize: 13,
-            color: colorTextSecondary,
+      child: HoverButton(
+        onPressed: () {},
+        foregroundColor: colorTextSecondary,
+        child: const IconLabel(
+          horizontalSpacing: 2,
+          label: Text(
+            'Contribution settings',
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w400,
+            ),
           ),
-        ),
-        rightIcon: Icon(
-          Octicons.triangle_down,
-          size: 10,
-          color: colorTextSecondary,
+          rightIcon: Icon(
+            Octicons.triangle_down,
+            size: 10,
+          ),
         ),
       ),
     );

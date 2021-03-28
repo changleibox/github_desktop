@@ -15,6 +15,7 @@ class CupertinoTextButton extends StatelessWidget {
     @required this.child,
     this.alignment = Alignment.center,
     this.padding = EdgeInsets.zero,
+    this.borderRadius = const BorderRadius.all(Radius.circular(6)),
   })  : assert(child != null),
         assert(alignment != null),
         super(key: key);
@@ -37,6 +38,11 @@ class CupertinoTextButton extends StatelessWidget {
   /// Defaults to 16.0 pixels.
   final EdgeInsetsGeometry padding;
 
+  /// The radius of the button's corners when it has a background color.
+  ///
+  /// Defaults to round corners of 8 logical pixels.
+  final BorderRadius borderRadius;
+
   /// 点击事件
   final VoidCallback onPressed;
 
@@ -47,6 +53,7 @@ class CupertinoTextButton extends StatelessWidget {
       padding: padding,
       minSize: 0,
       alignment: alignment,
+      borderRadius: borderRadius,
       onPressed: onPressed,
       child: DefaultTextStyle(
         style: TextStyle(

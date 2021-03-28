@@ -4,10 +4,11 @@
 
 import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:github_desktop/common/resources.dart';
-import 'package:github_desktop/model/user_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttericon/octicons_icons.dart';
+import 'package:github_desktop/common/resources.dart';
+import 'package:github_desktop/model/user_model.dart';
+import 'package:github_desktop/widget/hover_outline_button.dart';
 import 'package:provider/provider.dart';
 
 /// Created by changlei on 3/10/21.
@@ -43,19 +44,15 @@ class _EditProfileState extends State<EditProfile> {
         crossAxisAlignment: CrossAxisAlignment.start,
         direction: Axis.vertical,
         children: [
-          Container(
-            decoration: btnBorderDecoration,
-            width: double.infinity,
-            child: CupertinoButton(
-              borderRadius: BorderRadius.circular(6),
-              color: colorBtnBg,
-              padding: EdgeInsets.zero,
-              minSize: 30,
-              onPressed: () {
-                setState(() {
-                  isEditMode = true;
-                });
-              },
+          HoverOutlineButton(
+            padding: EdgeInsets.zero,
+            minSize: 30,
+            onPressed: () {
+              setState(() {
+                isEditMode = true;
+              });
+            },
+            child: Center(
               child: Text(
                 'Edit profile',
                 style: textStyle.copyWith(
@@ -285,47 +282,39 @@ class _EditProfileForm extends StatelessWidget {
           child: WidgetGroup.spacing(
             spacing: 4,
             children: [
-              Container(
-                decoration: primaryBtnBorderDecoration,
-                child: CupertinoButton(
-                  color: colorBtnPrimaryBg,
-                  borderRadius: primaryBorderRadius,
-                  minSize: 26,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 3,
-                    horizontal: 12,
-                  ),
-                  onPressed: () {
-                    onComplete?.call();
-                  },
-                  child: const Text(
-                    'Save',
-                    style: TextStyle(
-                      fontSize: 14,
-                      height: 1.05,
-                    ),
+              HoverOutlineButton(
+                primary: true,
+                onPressed: () {
+                  onComplete?.call();
+                },
+                minSize: 26,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 3,
+                  horizontal: 12,
+                ),
+                child: const Text(
+                  'Save',
+                  style: TextStyle(
+                    fontSize: 14,
+                    height: 1.05,
                   ),
                 ),
               ),
-              Container(
-                decoration: btnBorderDecoration,
-                child: CupertinoButton(
-                  borderRadius: primaryBorderRadius,
-                  minSize: 26,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 3,
-                    horizontal: 12,
-                  ),
-                  onPressed: () {
-                    onComplete?.call();
-                  },
-                  child: const Text(
-                    'Cancel',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: colorTextPrimary,
-                      height: 1.05,
-                    ),
+              HoverOutlineButton(
+                onPressed: () {
+                  onComplete?.call();
+                },
+                minSize: 26,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 3,
+                  horizontal: 12,
+                ),
+                child: const Text(
+                  'Cancel',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: colorTextPrimary,
+                    height: 1.05,
                   ),
                 ),
               ),

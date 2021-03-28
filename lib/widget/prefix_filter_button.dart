@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/widget/filter_button.dart';
 import 'package:fluttericon/octicons_icons.dart';
+import 'package:github_desktop/widget/hover_region.dart';
 
 /// Created by changlei on 3/10/21.
 ///
@@ -68,41 +69,48 @@ class _PrefixFilterButtonState extends State<PrefixFilterButton> {
         });
         widget.onChanged?.call(value);
       },
-      child: Container(
-        decoration: btnBorderDecoration,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-        ),
-        constraints: const BoxConstraints(
-          minHeight: 30,
-        ),
-        child: Row(
-          children: [
-            Text(
-              '${widget.name}: ',
-              style: textStyle.copyWith(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: textStyle.color.withOpacity(0.75),
-              ),
+      child: HoverRegion(
+        builder: (context, child, hover) {
+          return AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            decoration: btnBorderDecoration.copyWith(
+              color: hover ? colorBtnHoverBg : colorBtnBg,
             ),
-            Text(
-              _selectedValue,
-              style: textStyle.copyWith(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
             ),
-            const SizedBox(
-              width: 4,
+            constraints: const BoxConstraints(
+              minHeight: 30,
             ),
-            Icon(
-              Octicons.triangle_down,
-              size: 10,
-              color: textStyle.color,
+            child: Row(
+              children: [
+                Text(
+                  '${widget.name}: ',
+                  style: textStyle.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: textStyle.color.withOpacity(0.75),
+                  ),
+                ),
+                Text(
+                  _selectedValue,
+                  style: textStyle.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(
+                  width: 4,
+                ),
+                Icon(
+                  Octicons.triangle_down,
+                  size: 10,
+                  color: textStyle.color,
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

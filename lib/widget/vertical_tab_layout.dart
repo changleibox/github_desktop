@@ -5,7 +5,7 @@
 import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:github_desktop/common/resources.dart';
-import 'package:github_desktop/widget/hover_region.dart';
+import 'package:github_desktop/widget/hover_button.dart';
 
 /// Created by box on 3/27/21.
 ///
@@ -88,39 +88,28 @@ class _TabItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HoverRegion(
-      builder: (context, child, hover) {
-        Color color;
-        if (selected) {
-          color = colorStateSelectedPrimary;
-        } else if (hover) {
-          color = colorBgTertiary;
-        }
-        return CupertinoButton(
-          onPressed: onPressed,
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 8,
-          ),
-          minSize: 34,
-          borderRadius: primaryBorderRadius,
-          color: color,
-          alignment: Alignment.centerLeft,
-          child: Builder(
-            builder: (context) {
-              final textStyle = DefaultTextStyle.of(context).style;
-              return DefaultTextStyle(
-                style: textStyle.copyWith(
-                  fontSize: 12,
-                  color: selected ? textStyle.color : colorTextSecondary,
-                ),
-                child: child,
-              );
-            },
-          ),
-        );
-      },
-      child: child,
+    return HoverButton(
+      onPressed: onPressed,
+      hoverStyle: HoverStyle.plain,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 8,
+      ),
+      minSize: 34,
+      color: selected ? colorStateSelectedPrimary : null,
+      alignment: Alignment.centerLeft,
+      child: Builder(
+        builder: (context) {
+          final textStyle = DefaultTextStyle.of(context).style;
+          return DefaultTextStyle(
+            style: textStyle.copyWith(
+              fontSize: 12,
+              color: selected ? textStyle.color : colorTextSecondary,
+            ),
+            child: child,
+          );
+        },
+      ),
     );
   }
 }

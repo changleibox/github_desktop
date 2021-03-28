@@ -4,6 +4,7 @@
 
 import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:fluttericon/octicons_icons.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/github_gql/github_queries.data.gql.dart';
 import 'package:github_desktop/github_gql/github_queries.req.gql.dart';
@@ -13,11 +14,10 @@ import 'package:github_desktop/page_widget/issues/issues_tile.dart';
 import 'package:github_desktop/system/exceptions.dart';
 import 'package:github_desktop/widget/assigned_bar.dart';
 import 'package:github_desktop/widget/divider.dart';
-import 'package:github_desktop/widget/footer.dart';
+import 'package:github_desktop/widget/footer_bar.dart';
 import 'package:github_desktop/widget/future_list_view.dart';
 import 'package:github_desktop/widget/github_action_bar.dart';
 import 'package:github_desktop/widget/pro_tip.dart';
-import 'package:fluttericon/octicons_icons.dart';
 import 'package:provider/provider.dart';
 
 /// Created by changlei on 3/8/21.
@@ -78,12 +78,7 @@ class _IssuesPageState extends State<IssuesPage> {
     if (response.errors != null && response.errors.isNotEmpty) {
       throw QueryException(response.errors);
     }
-    return $AssignedIssues(response.data)
-        .search
-        .edges
-        .map((e) => e.node)
-        .whereType<$AssignedIssues$search$edges$node$asIssue>()
-        .toList();
+    return $AssignedIssues(response.data).search.edges.map((e) => e.node).whereType<$AssignedIssues$search$edges$node$asIssue>().toList();
   }
 
   Future<int> _retrieveAssignedIssuesCount(String query) async {
@@ -96,12 +91,7 @@ class _IssuesPageState extends State<IssuesPage> {
     if (response.errors != null) {
       return 0;
     }
-    return $AssignedIssues(response.data)
-        .search
-        .edges
-        .map((e) => e.node)
-        .whereType<$AssignedIssues$search$edges$node$asIssue>()
-        .length;
+    return $AssignedIssues(response.data).search.edges.map((e) => e.node).whereType<$AssignedIssues$search$edges$node$asIssue>().length;
   }
 
   @override
@@ -195,7 +185,7 @@ class _IssuesPageState extends State<IssuesPage> {
               const CupertinoDivider(
                 height: 80,
               ),
-              Footer(),
+              FooterBar(),
               const SizedBox(
                 height: 30,
               ),

@@ -14,7 +14,7 @@ import 'package:github_desktop/page_widget/issues/pull_request_tile.dart';
 import 'package:github_desktop/system/exceptions.dart';
 import 'package:github_desktop/widget/assigned_bar.dart';
 import 'package:github_desktop/widget/divider.dart';
-import 'package:github_desktop/widget/footer.dart';
+import 'package:github_desktop/widget/footer_bar.dart';
 import 'package:github_desktop/widget/future_list_view.dart';
 import 'package:github_desktop/widget/github_action_bar.dart';
 import 'package:github_desktop/widget/pro_tip.dart';
@@ -203,7 +203,7 @@ class _PullRequestsPageState extends State<PullRequestsPage> {
               const CupertinoDivider(
                 height: 80,
               ),
-              Footer(),
+              FooterBar(),
               const SizedBox(
                 height: 30,
               ),

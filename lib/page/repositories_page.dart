@@ -17,9 +17,9 @@ import 'package:github_desktop/page_widget/repositories/repositories_tile.dart';
 import 'package:github_desktop/system/exceptions.dart';
 import 'package:github_desktop/util/date_format_utils.dart';
 import 'package:github_desktop/widget/animated_expandable.dart';
-import 'package:github_desktop/widget/cupertino_text_button.dart';
 import 'package:github_desktop/widget/divider.dart';
 import 'package:github_desktop/widget/future_list_view.dart';
+import 'package:github_desktop/widget/hover_button.dart';
 import 'package:provider/provider.dart';
 
 const _pageSize = 30;
@@ -211,14 +211,19 @@ class _RepositoriesPageState extends State<RepositoriesPage> {
                           top: 16,
                           bottom: 16,
                         ),
+                        clipBehavior: Clip.antiAlias,
                         child: WidgetGroup(
                           divider: const CupertinoVerticalDivider(),
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
-                            CupertinoTextButton(
+                            HoverButton(
                               onPressed: _pageInfo?.hasPreviousPage == true ? _onPreviousPressed : null,
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 16,
+                              ),
+                              hoverStyle: HoverStyle.highlight,
+                              borderRadius: const BorderRadius.horizontal(
+                                left: primaryRadius,
                               ),
                               child: const Text(
                                 'Previous',
@@ -228,10 +233,14 @@ class _RepositoriesPageState extends State<RepositoriesPage> {
                                 ),
                               ),
                             ),
-                            CupertinoTextButton(
+                            HoverButton(
                               onPressed: _pageInfo?.hasNextPage == true ? _onNextPressed : null,
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 16,
+                              ),
+                              hoverStyle: HoverStyle.highlight,
+                              borderRadius: const BorderRadius.horizontal(
+                                right: primaryRadius,
                               ),
                               child: const Text(
                                 'Next',

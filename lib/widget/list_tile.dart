@@ -5,7 +5,7 @@
 import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:github_desktop/common/resources.dart';
-import 'package:github_desktop/widget/cupertino_text_button.dart';
+import 'package:github_desktop/widget/hover_button.dart';
 
 /// Created by changlei on 3/8/21.
 ///
@@ -56,15 +56,21 @@ class CupertinoListTile extends StatelessWidget {
                 direction: Axis.vertical,
                 spacing: 8,
                 children: [
-                  CupertinoTextButton(
+                  HoverButton(
                     onPressed: onPressed,
-                    child: DefaultTextStyle(
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: CupertinoColors.systemBlue,
-                      ),
-                      child: title,
+                    hoverStyle: HoverStyle.solid,
+                    foregroundColor: CupertinoColors.systemBlue,
+                    child: Builder(
+                      builder: (context) {
+                        final textStyle = DefaultTextStyle.of(context).style;
+                        return DefaultTextStyle(
+                          style: textStyle.copyWith(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          child: title,
+                        );
+                      },
                     ),
                   ),
                   DefaultTextStyle(

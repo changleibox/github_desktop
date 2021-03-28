@@ -31,6 +31,7 @@ class DesktopApp extends StatelessWidget {
           return CupertinoApp(
             title: 'GitHub',
             theme: CupertinoThemeData(
+              primaryColor: primaryColor,
               brightness: Brightness.light,
               barBackgroundColor: CupertinoColors.white,
               scaffoldBackgroundColor: CupertinoColors.white,

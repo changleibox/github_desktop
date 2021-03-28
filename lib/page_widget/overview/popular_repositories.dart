@@ -6,16 +6,16 @@ import 'dart:async';
 
 import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:fluttericon/octicons_icons.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/github_gql/github_queries.data.gql.dart';
 import 'package:github_desktop/github_gql/github_queries.req.gql.dart';
 import 'package:github_desktop/model/user_model.dart';
 import 'package:github_desktop/system/exceptions.dart';
 import 'package:github_desktop/util/date_format_utils.dart';
-import 'package:github_desktop/widget/cupertino_text_button.dart';
 import 'package:github_desktop/widget/future_wrapper_view.dart';
 import 'package:github_desktop/widget/grid_layout.dart';
-import 'package:fluttericon/octicons_icons.dart';
+import 'package:github_desktop/widget/hover_button.dart';
 import 'package:provider/provider.dart';
 
 /// Created by box on 3/27/21.
@@ -83,14 +83,13 @@ class _PopularRepositoriesState extends State<PopularRepositories> {
                       fontSize: 16,
                     ),
                   ),
-                  CupertinoTextButton(
+                  HoverButton(
                     onPressed: () {},
+                    foregroundColor: colorTextSecondary,
                     child: const Text(
                       'Customize your pins',
                       style: TextStyle(
                         fontSize: 13,
-                        color: colorTextSecondary,
-                        fontWeight: FontWeight.normal,
                       ),
                     ),
                   ),
@@ -147,10 +146,14 @@ class _RepositoryItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         direction: Axis.vertical,
         children: [
-          CupertinoTextButton(
+          HoverButton(
             onPressed: () {},
+            hoverStyle: HoverStyle.solid,
             child: Text(
               item.name,
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
           if (item.description != null)

@@ -4,12 +4,12 @@
 
 import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:fluttericon/octicons_icons.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/model/user_model.dart';
-import 'package:github_desktop/widget/cupertino_text_button.dart';
 import 'package:github_desktop/widget/divider.dart';
+import 'package:github_desktop/widget/hover_button.dart';
 import 'package:github_desktop/widget/vertical_tab_layout.dart';
-import 'package:fluttericon/octicons_icons.dart';
 import 'package:provider/provider.dart';
 
 /// Created by box on 3/27/21.
@@ -289,12 +289,12 @@ class _RepositoriesTimeline extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              CupertinoTextButton(
+              HoverButton(
                 onPressed: () {},
+                foregroundColor: colorTextSecondary,
                 child: const Icon(
                   Octicons.unfold,
                   size: 16,
-                  color: colorTextSecondary,
                 ),
               ),
             ],
@@ -330,8 +330,9 @@ class _RepositoriesActivity extends StatelessWidget {
                   child: IconLabel(
                     alignment: MainAxisAlignment.start,
                     horizontalSpacing: 4,
-                    label: CupertinoTextButton(
+                    label: HoverButton(
                       onPressed: () {},
+                      hoverStyle: HoverStyle.solid,
                       child: const Text(
                         'changleibox/flutter_echart',
                         style: TextStyle(
@@ -413,13 +414,13 @@ class _IssuesTimeline extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              CupertinoTextButton(
+              HoverButton(
                 onPressed: () {},
+                foregroundColor: colorTextTertiary,
                 child: const Text(
                   'Mar 3',
                   style: TextStyle(
                     fontSize: 12,
-                    color: colorTextTertiary,
                   ),
                 ),
               ),
@@ -466,7 +467,8 @@ class _IssuesActivity extends StatelessWidget {
                   direction: Axis.vertical,
                   spacing: 8,
                   children: <Widget>[
-                    CupertinoTextButton(
+                    HoverButton(
+                      hoverStyle: HoverStyle.solid,
                       onPressed: () {},
                       child: Text(
                         '[IOS] When the obscureText parameter of CupertinoTextField is set to true, '
