@@ -89,6 +89,7 @@ class _RepositoriesPageState extends State<RepositoriesPage> {
     }
     final search = $Repositories(response.data).search;
     _pageInfo = search.pageInfo;
+    PrimaryScrollController.of(context)?.jumpTo(0);
     return search.edges.map((e) => e.node).whereType<$Repositories$search$edges$node$asRepository>().toList();
   }
 
