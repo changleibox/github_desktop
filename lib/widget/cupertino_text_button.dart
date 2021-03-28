@@ -14,6 +14,7 @@ class CupertinoTextButton extends StatelessWidget {
     this.onPressed,
     @required this.child,
     this.alignment = Alignment.center,
+    this.padding = EdgeInsets.zero,
   })  : assert(child != null),
         assert(alignment != null),
         super(key: key);
@@ -31,21 +32,27 @@ class CupertinoTextButton extends StatelessWidget {
   /// Always defaults to [Alignment.center].
   final AlignmentGeometry alignment;
 
+  /// The amount of space to surround the child inside the bounds of the button.
+  ///
+  /// Defaults to 16.0 pixels.
+  final EdgeInsetsGeometry padding;
+
   /// 点击事件
   final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
+    final color = CupertinoColors.systemBlue;
     return CupertinoButton(
-      padding: EdgeInsets.zero,
+      padding: padding,
       minSize: 0,
       alignment: alignment,
       onPressed: onPressed,
       child: DefaultTextStyle(
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w600,
-          color: CupertinoColors.systemBlue,
+          color: onPressed == null ? color.withOpacity(0.5) : color,
         ),
         child: child,
       ),

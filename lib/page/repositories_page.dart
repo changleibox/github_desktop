@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/github_gql/github_queries.data.gql.dart';
 import 'package:github_desktop/github_gql/github_queries.req.gql.dart';
 import 'package:github_desktop/model/user_model.dart';
@@ -16,6 +17,7 @@ import 'package:github_desktop/page_widget/repositories/repositories_tile.dart';
 import 'package:github_desktop/system/exceptions.dart';
 import 'package:github_desktop/util/date_format_utils.dart';
 import 'package:github_desktop/widget/animated_expandable.dart';
+import 'package:github_desktop/widget/cupertino_text_button.dart';
 import 'package:github_desktop/widget/divider.dart';
 import 'package:github_desktop/widget/future_list_view.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +36,7 @@ class _RepositoriesPageState extends State<RepositoriesPage> {
   String _query;
   String _type;
   String _language;
+  int _page = 0;
 
   Future<List<$Repositories$search$edges$node$asRepository>> _retrieveRepositories() async {
     final userModel = context.read<UserModel>();
@@ -77,16 +80,23 @@ class _RepositoriesPageState extends State<RepositoriesPage> {
     if (response.errors != null && response.errors.isNotEmpty) {
       throw QueryException(response.errors);
     }
-    return $Repositories(response.data)
-        .search
-        .edges
-        .map((e) => e.node)
-        .whereType<$Repositories$search$edges$node$asRepository>()
-        .toList();
+    return $Repositories(response.data).search.edges.map((e) => e.node).whereType<$Repositories$search$edges$node$asRepository>().toList();
   }
 
   void _request() {
     _repositories = _retrieveRepositories();
+  }
+
+  void _onPreviousPressed() {
+    setState(() {
+      _page--;
+    });
+  }
+
+  void _onNextPressed() {
+    setState(() {
+      _page++;
+    });
   }
 
   @override
@@ -180,6 +190,49 @@ class _RepositoriesPageState extends State<RepositoriesPage> {
                 ],
               );
             },
+          ),
+        ),
+        Center(
+          child: IntrinsicWidth(
+            child: Container(
+              decoration: primaryBorderDecoration,
+              height: 30,
+              margin: const EdgeInsets.only(
+                top: 16,
+                bottom: 16,
+              ),
+              child: WidgetGroup(
+                divider: const CupertinoVerticalDivider(),
+                children: <Widget>[
+                  CupertinoTextButton(
+                    onPressed: _page == 0 ? null : _onPreviousPressed,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                    ),
+                    child: const Text(
+                      'Previous',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  CupertinoTextButton(
+                    onPressed: _onNextPressed,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                    ),
+                    child: const Text(
+                      'Next',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ],
