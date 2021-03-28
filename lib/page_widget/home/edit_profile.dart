@@ -295,7 +295,7 @@ class _EditProfileForm extends StatelessWidget {
                 child: const Text(
                   'Save',
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 12,
                     height: 1.05,
                   ),
                 ),
@@ -312,7 +312,7 @@ class _EditProfileForm extends StatelessWidget {
                 child: const Text(
                   'Cancel',
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 12,
                     color: colorTextPrimary,
                     height: 1.05,
                   ),

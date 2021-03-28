@@ -95,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       decoration: const BoxDecoration(
                         borderRadius: primaryBorderRadius,
-                        border: Border.fromBorderSide(primaryBorderSide),
+                        border: Border.fromBorderSide(borderSide),
                       ),
                       child: Text.rich(
                         TextSpan(

@@ -120,7 +120,7 @@ class _GithubLoginState extends State<GithubLogin> {
             decoration: const BoxDecoration(
               color: colorBgTertiary,
               borderRadius: primaryBorderRadius,
-              border: Border.fromBorderSide(primaryBorderSide),
+              border: Border.fromBorderSide(borderSide),
             ),
             padding: const EdgeInsets.all(20),
             child: Column(

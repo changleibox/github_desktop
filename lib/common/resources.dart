@@ -108,8 +108,14 @@ const colorTimelineBadgeBg = Color(0xffe1e4e8);
 const colorFooterInvertocatOcticon = Color(0xffd1d5da);
 
 /// 默认边框
-const primaryBorderSide = BorderSide(
+const borderSide = BorderSide(
   color: colorBorderSecondary,
+  width: 1,
+);
+
+/// 主题色边框
+const primaryBorderSide = BorderSide(
+  color: colorBorderPrimary,
   width: 1,
 );
 
@@ -134,6 +140,12 @@ const headerInputBorderSide = BorderSide(
 /// 按钮边框
 const btnBorderSide = BorderSide(
   color: colorBtnBorder,
+  width: 1,
+);
+
+/// 主题色按钮边框
+const primaryBtnBorderSide = BorderSide(
+  color: colorBtnPrimaryBorder,
   width: 1,
 );
 
@@ -163,10 +175,7 @@ const BoxDecoration headerInputBorderDecoration = BoxDecoration(
 /// 默认按钮框边框
 const BoxDecoration primaryBtnBorderDecoration = BoxDecoration(
   color: colorBtnPrimaryBg,
-  border: Border.fromBorderSide(BorderSide(
-    color: colorBtnPrimaryBorder,
-    width: 1,
-  )),
+  border: Border.fromBorderSide(primaryBtnBorderSide),
   borderRadius: primaryBorderRadius,
 );
 
@@ -179,10 +188,7 @@ const BoxDecoration btnBorderDecoration = BoxDecoration(
 
 /// 边框
 const BoxDecoration primaryBorderDecoration = BoxDecoration(
-  border: Border.fromBorderSide(BorderSide(
-    color: colorBorderPrimary,
-    width: 1,
-  )),
+  border: Border.fromBorderSide(primaryBorderSide),
   borderRadius: primaryBorderRadius,
 );
 

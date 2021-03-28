@@ -19,10 +19,29 @@ class HoverOutlineButton extends StatelessWidget {
       horizontal: 12,
     ),
     this.alignment = Alignment.center,
-    this.primary = false,
+    bool primary = false,
     this.onPressed,
   })  : assert(child != null),
         assert(primary != null),
+        color = primary ? colorBtnPrimaryBg : colorBtnBg,
+        hoverColor = primary ? colorBtnHoverPrimaryBg : colorBtnHoverBg,
+        borderSide = primary ? primaryBtnBorderSide : btnBorderSide,
+        super(key: key);
+
+  /// 构造函数
+  const HoverOutlineButton.fill({
+    Key key,
+    @required this.child,
+    this.minSize = 28,
+    this.padding = const EdgeInsets.symmetric(
+      horizontal: 12,
+    ),
+    this.alignment = Alignment.center,
+    this.color,
+    this.hoverColor = colorBgTertiary,
+    this.borderSide = btnBorderSide,
+    this.onPressed,
+  })  : assert(child != null),
         super(key: key);
 
   /// child
@@ -40,23 +59,24 @@ class HoverOutlineButton extends StatelessWidget {
   /// pressed
   final VoidCallback onPressed;
 
-  /// 是否为主题色按钮
-  final bool primary;
+  /// 按钮主题色
+  final Color color;
+
+  /// 按钮hover色
+  final Color hoverColor;
+
+  /// 边框
+  final BorderSide borderSide;
 
   @override
   Widget build(BuildContext context) {
     return HoverRegion(
       builder: (context, child, hover) {
-        BoxDecoration decoration;
-        if (primary) {
-          decoration = primaryBtnBorderDecoration.copyWith(
-            color: hover ? colorBtnHoverPrimaryBg : colorBtnPrimaryBg,
-          );
-        } else {
-          decoration = btnBorderDecoration.copyWith(
-            color: hover ? colorBtnHoverBg : colorBtnBg,
-          );
-        }
+        final decoration = BoxDecoration(
+          borderRadius: primaryBorderRadius,
+          border: Border.fromBorderSide(borderSide),
+          color: hover ? hoverColor : color,
+        );
         return AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: decoration,

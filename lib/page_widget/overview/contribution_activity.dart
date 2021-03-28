@@ -9,6 +9,7 @@ import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/model/user_model.dart';
 import 'package:github_desktop/widget/divider.dart';
 import 'package:github_desktop/widget/hover_button.dart';
+import 'package:github_desktop/widget/hover_outline_button.dart';
 import 'package:github_desktop/widget/vertical_tab_layout.dart';
 import 'package:provider/provider.dart';
 
@@ -71,23 +72,20 @@ class _ContributionActivityState extends State<ContributionActivity> {
                     },
                   ),
                 ),
-                Container(
-                  decoration: primaryBorderDecoration,
-                  child: CupertinoButton(
-                    borderRadius: primaryBorderRadius,
-                    minSize: 36,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8,
-                      horizontal: 6,
-                    ),
-                    onPressed: () {},
-                    child: const Text(
-                      'Show more activity',
-                      style: TextStyle(
-                        fontSize: 12,
-                        height: 1.05,
-                        fontWeight: FontWeight.w600,
-                      ),
+                HoverOutlineButton.fill(
+                  minSize: 36,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 6,
+                  ),
+                  onPressed: () {},
+                  child: Text(
+                    'Show more activity',
+                    style: TextStyle(
+                      fontSize: 12,
+                      height: 1.05,
+                      fontWeight: FontWeight.w600,
+                      color: CupertinoTheme.of(context).primaryColor,
                     ),
                   ),
                 ),
