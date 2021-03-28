@@ -2,6 +2,7 @@
  * Copyright (c) 2021 CHANGLEI. All rights reserved.
  */
 
+import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/github_gql/github_queries.data.gql.dart';
@@ -127,7 +128,8 @@ class _IssuesPageState extends State<IssuesPage> {
             vertical: 24,
           ),
           width: 1012,
-          child: Column(
+          child: WidgetGroup(
+            direction: Axis.vertical,
             children: [
               AssignedBar(
                 items: const {
@@ -153,7 +155,9 @@ class _IssuesPageState extends State<IssuesPage> {
               Expanded(
                 child: Container(
                   decoration: primaryBorderDecoration,
-                  child: Column(
+                  child: WidgetGroup(
+                    direction: Axis.vertical,
+                    divider: const CupertinoDivider(),
                     children: [
                       IssuesFilterBar(
                         icon: const Icon(Octicons.issue_opened),
@@ -166,7 +170,6 @@ class _IssuesPageState extends State<IssuesPage> {
                           });
                         },
                       ),
-                      const CupertinoDivider(),
                       Expanded(
                         child: FutureListView<$AssignedIssues$search$edges$node$asIssue>(
                           future: _assignedIssues,

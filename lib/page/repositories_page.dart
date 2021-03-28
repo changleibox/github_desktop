@@ -213,6 +213,7 @@ class _RepositoriesPageState extends State<RepositoriesPage> {
                         ),
                         child: WidgetGroup(
                           divider: const CupertinoVerticalDivider(),
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
                             CupertinoTextButton(
                               onPressed: _pageInfo?.hasPreviousPage == true ? _onPreviousPressed : null,

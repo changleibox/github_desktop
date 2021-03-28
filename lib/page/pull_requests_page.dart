@@ -4,6 +4,7 @@
 
 import 'dart:async';
 
+import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:github_desktop/github_gql/github_queries.data.gql.dart';
 import 'package:github_desktop/github_gql/github_queries.req.gql.dart';
@@ -128,7 +129,8 @@ class _PullRequestsPageState extends State<PullRequestsPage> {
             vertical: 24,
           ),
           width: 1012,
-          child: Column(
+          child: WidgetGroup(
+            direction: Axis.vertical,
             children: [
               AssignedBar(
                 items: const {
@@ -161,7 +163,9 @@ class _PullRequestsPageState extends State<PullRequestsPage> {
                       width: 0,
                     ),
                   ),
-                  child: Column(
+                  child: WidgetGroup(
+                    direction: Axis.vertical,
+                    divider: const CupertinoDivider(),
                     children: [
                       IssuesFilterBar(
                         icon: const Icon(Octicons.git_pull_request),
@@ -174,7 +178,6 @@ class _PullRequestsPageState extends State<PullRequestsPage> {
                           });
                         },
                       ),
-                      const CupertinoDivider(),
                       Expanded(
                         child: FutureListView<$AssignedPullRequests$search$edges$node$asPullRequest>(
                           future: _pullRequests,

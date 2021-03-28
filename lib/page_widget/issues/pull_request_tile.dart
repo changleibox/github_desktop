@@ -3,6 +3,7 @@
  */
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:github_desktop/github_gql/github_queries.data.gql.dart';
 import 'package:github_desktop/util/launch_utils.dart';
@@ -90,27 +91,22 @@ class PullRequestsTile extends StatelessWidget {
           ],
         ),
       ),
-      subtitle: Padding(
-        padding: const EdgeInsets.only(
-          top: 4,
-        ),
-        child: Text.rich(
-          TextSpan(children: [
-            TextSpan(
-              text: '#${item.number} opened on ',
-            ),
-            WidgetSpan(
-              child: AutoUpdateDate(
-                dateTime: item.createdAt.value,
-              ),
-            ),
-            TextSpan(
-              text: ' by ${item.author.login}',
-            ),
-          ]),
-          style: const TextStyle(
-            fontSize: 12,
+      subtitle: Text.rich(
+        TextSpan(children: [
+          TextSpan(
+            text: '#${item.number} opened on ',
           ),
+          WidgetSpan(
+            child: AutoUpdateDate(
+              dateTime: item.createdAt.value,
+            ),
+          ),
+          TextSpan(
+            text: ' by ${item.author.login}',
+          ),
+        ]),
+        style: const TextStyle(
+          fontSize: 12,
         ),
       ),
       trailing: Container(
@@ -121,21 +117,20 @@ class PullRequestsTile extends StatelessWidget {
               const Spacer()
             else
               Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Icon(
-                      Octicons.git_pull_request,
-                      size: 16,
-                      color: textColor,
+                child: IconLabel(
+                  alignment: MainAxisAlignment.end,
+                  horizontalSpacing: 4,
+                  leftIcon: Icon(
+                    Octicons.git_pull_request,
+                    size: 16,
+                    color: textColor,
+                  ),
+                  label: Text(
+                    '$pullRequestCount',
+                    style: const TextStyle(
+                      height: 1,
                     ),
-                    const SizedBox(
-                      width: 4,
-                    ),
-                    Text(
-                      '$pullRequestCount',
-                    ),
-                  ],
+                  ),
                 ),
               ),
             if (assigneeAvatar == null)
@@ -158,21 +153,20 @@ class PullRequestsTile extends StatelessWidget {
               const Spacer()
             else
               Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Icon(
-                      Octicons.comment,
-                      size: 16,
-                      color: textColor,
+                child: IconLabel(
+                  alignment: MainAxisAlignment.end,
+                  horizontalSpacing: 4,
+                  leftIcon: Icon(
+                    Octicons.comment,
+                    size: 16,
+                    color: textColor,
+                  ),
+                  label: Text(
+                    '${item.comments.totalCount}',
+                    style: const TextStyle(
+                      height: 1,
                     ),
-                    const SizedBox(
-                      width: 4,
-                    ),
-                    Text(
-                      '${item.comments.totalCount}',
-                    ),
-                  ],
+                  ),
                 ),
               ),
           ],
