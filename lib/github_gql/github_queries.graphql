@@ -1,0 +1,221 @@
+query ViewerDetail {
+    viewer {
+        login
+        avatarUrl
+        url
+        name
+        status {
+            emoji
+            emojiHTML
+            message
+        }
+        location
+        repositories {
+            totalCount
+        }
+        followers {
+            totalCount
+        }
+        following {
+            totalCount
+        }
+        starredRepositories {
+            totalCount
+        }
+    }
+}
+
+query AssignedPullRequests($query: String!, $count: Int!) {
+    search(query: $query, type: ISSUE, first: $count) {
+        edges {
+            node {
+                ... on PullRequest {
+                    __typename
+                    repository {
+                        nameWithOwner
+                        url
+                    }
+                    number
+                    url
+                    title
+                    author {
+                        login
+                        url
+                    }
+                    createdAt
+                    closedAt
+                    labels(first: 100) {
+                        nodes {
+                            name
+                            color
+                        }
+                    }
+                    comments {
+                        totalCount
+                    }
+                    assignees(first: 100) {
+                        nodes {
+                            avatarUrl
+                            name
+                        }
+                    }
+                    timelineItems(
+                        first: 100,
+                        itemTypes: [CROSS_REFERENCED_EVENT]
+                    ) {
+                        nodes {
+                            ... on CrossReferencedEvent {
+                                __typename
+                                isCrossRepository
+                                source {
+                                    ... on PullRequest {
+                                        title
+                                        url
+                                    }
+                                }
+                            }
+                        }
+                        filteredCount
+                    }
+                }
+            }
+        }
+    }
+}
+
+query AssignedIssues($query: String!, $count: Int!) {
+    search(query: $query, type: ISSUE, first: $count) {
+        edges {
+            node {
+                ... on Issue {
+                    __typename
+                    repository {
+                        nameWithOwner
+                        url
+                    }
+                    number
+                    url
+                    title
+                    author {
+                        login
+                        url
+                    }
+                    createdAt
+                    closedAt
+                    labels(first: 100) {
+                        nodes {
+                            name
+                            color
+                        }
+                    }
+                    comments {
+                        totalCount
+                    }
+                    assignees(first: 100) {
+                        nodes {
+                            avatarUrl
+                            name
+                        }
+                    }
+                    timelineItems(
+                        first: 100,
+                        itemTypes: [CROSS_REFERENCED_EVENT]
+                    ) {
+                        nodes {
+                            ... on CrossReferencedEvent {
+                                __typename
+                                isCrossRepository
+                                source {
+                                    ... on PullRequest {
+                                        title
+                                        url
+                                    }
+                                }
+                            }
+                        }
+                        filteredCount
+                    }
+                }
+            }
+        }
+    }
+}
+
+query Repositories($query: String!, $count: Int!, $historySince: GitTimestamp) {
+    search(query: $query, type: REPOSITORY, first: $count) {
+        repositoryCount
+        edges {
+            node {
+                ... on Repository {
+                    __typename
+                    name
+                    description
+                    isFork
+                    isPrivate
+                    viewerHasStarred
+                    openGraphImageUrl
+                    mirrorUrl
+                    stargazers {
+                        totalCount
+                    }
+                    languages(
+                        first: 1,
+                        orderBy: {field: SIZE, direction: DESC}
+                    ) {
+                        nodes {
+                            color
+                            name
+                        }
+                    }
+                    licenseInfo {
+                        name
+                    }
+                    forkCount
+                    parent {
+                        name
+                        nameWithOwner
+                        owner {
+                            login
+                            avatarUrl
+                        }
+                        forkCount
+                    }
+                    url
+                    issues {
+                        totalCount
+                    }
+                    owner {
+                        login
+                        avatarUrl
+                    }
+                    updatedAt
+                    pushedAt
+                    createdAt
+                    name
+                    nameWithOwner
+                    refs(
+                        refPrefix: "refs/heads/",
+                        first: 100,
+                        orderBy: {field: TAG_COMMIT_DATE, direction: DESC}
+                    ) {
+                        nodes {
+                            target {
+                                ... on Commit {
+                                    __typename
+                                    history(since: $historySince) {
+                                        edges {
+                                            node {
+                                                message
+                                                committedDate
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
