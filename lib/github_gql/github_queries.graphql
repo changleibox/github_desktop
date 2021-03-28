@@ -141,9 +141,22 @@ query AssignedIssues($query: String!, $count: Int!) {
     }
 }
 
-query Repositories($query: String!, $count: Int!, $historySince: GitTimestamp) {
-    search(query: $query, type: REPOSITORY, first: $count) {
+query Repositories($query: String!, $first: Int, $last: Int, $historySince: GitTimestamp, $before: String, $after: String) {
+    search(
+        query: $query,
+        type: REPOSITORY,
+        first: $first,
+        last:$last,
+        after: $after,
+        before: $before
+    ) {
         repositoryCount
+        pageInfo {
+            endCursor
+            hasNextPage
+            hasPreviousPage
+            startCursor
+        }
         edges {
             node {
                 ... on Repository {

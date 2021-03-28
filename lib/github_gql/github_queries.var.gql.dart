@@ -25,7 +25,10 @@ class RepositoriesVarBuilder {
   final Map<String, dynamic> variables = <String, dynamic>{};
 
   set query(String value) => variables['query'] = value;
-  set count(int value) => variables['count'] = value;
+  set first(int value) => variables['first'] = value;
+  set last(int value) => variables['last'] = value;
   set historySince(_i1.GitTimestamp value) =>
       variables['historySince'] = value.value;
+  set before(String value) => variables['before'] = value;
+  set after(String value) => variables['after'] = value;
 }

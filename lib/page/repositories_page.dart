@@ -22,6 +22,8 @@ import 'package:github_desktop/widget/divider.dart';
 import 'package:github_desktop/widget/future_list_view.dart';
 import 'package:provider/provider.dart';
 
+const _pageSize = 30;
+
 /// Created by changlei on 3/8/21.
 ///
 /// Repositories
@@ -36,7 +38,9 @@ class _RepositoriesPageState extends State<RepositoriesPage> {
   String _query;
   String _type;
   String _language;
-  int _page = 0;
+  String _before;
+  String _after;
+  $Repositories$search$pageInfo _pageInfo;
 
   Future<List<$Repositories$search$edges$node$asRepository>> _retrieveRepositories() async {
     final userModel = context.read<UserModel>();
@@ -73,14 +77,19 @@ class _RepositoriesPageState extends State<RepositoriesPage> {
     }
     final response = await userModel.request(Repositories((b) {
       return b
-        ..count = 100
+        ..before = _before
+        ..after = _after
+        ..first = _before == null ? _pageSize : null
+        ..last = _after == null && _before != null ? _pageSize : null
         ..query = queryParams.join(' ')
         ..historySince = DateFormatUtils.formattedLastYear;
     }));
     if (response.errors != null && response.errors.isNotEmpty) {
       throw QueryException(response.errors);
     }
-    return $Repositories(response.data).search.edges.map((e) => e.node).whereType<$Repositories$search$edges$node$asRepository>().toList();
+    final search = $Repositories(response.data).search;
+    _pageInfo = search.pageInfo;
+    return search.edges.map((e) => e.node).whereType<$Repositories$search$edges$node$asRepository>().toList();
   }
 
   void _request() {
@@ -88,14 +97,18 @@ class _RepositoriesPageState extends State<RepositoriesPage> {
   }
 
   void _onPreviousPressed() {
+    _before = _pageInfo?.startCursor;
+    _after = null;
     setState(() {
-      _page--;
+      _request();
     });
   }
 
   void _onNextPressed() {
+    _before = null;
+    _after = _pageInfo?.endCursor;
     setState(() {
-      _page++;
+      _request();
     });
   }
 
@@ -165,7 +178,6 @@ class _RepositoriesPageState extends State<RepositoriesPage> {
               return WidgetGroup(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 direction: Axis.vertical,
-                divider: hasFilterCondition ? const CupertinoDivider() : null,
                 children: [
                   AnimatedExpandable(
                     isExpanded: hasFilterCondition,
@@ -184,55 +196,57 @@ class _RepositoriesPageState extends State<RepositoriesPage> {
                       },
                     ),
                   ),
+                  if (hasFilterCondition) const CupertinoDivider(),
                   Expanded(
                     child: child,
+                  ),
+                  const CupertinoDivider(),
+                  Center(
+                    child: IntrinsicWidth(
+                      child: Container(
+                        decoration: primaryBorderDecoration,
+                        height: 30,
+                        margin: const EdgeInsets.only(
+                          top: 16,
+                          bottom: 16,
+                        ),
+                        child: WidgetGroup(
+                          divider: const CupertinoVerticalDivider(),
+                          children: <Widget>[
+                            CupertinoTextButton(
+                              onPressed: _pageInfo?.hasPreviousPage == true ? _onPreviousPressed : null,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                              ),
+                              child: const Text(
+                                'Previous',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            CupertinoTextButton(
+                              onPressed: _pageInfo?.hasNextPage == true ? _onNextPressed : null,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                              ),
+                              child: const Text(
+                                'Next',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               );
             },
-          ),
-        ),
-        Center(
-          child: IntrinsicWidth(
-            child: Container(
-              decoration: primaryBorderDecoration,
-              height: 30,
-              margin: const EdgeInsets.only(
-                top: 16,
-                bottom: 16,
-              ),
-              child: WidgetGroup(
-                divider: const CupertinoVerticalDivider(),
-                children: <Widget>[
-                  CupertinoTextButton(
-                    onPressed: _page == 0 ? null : _onPreviousPressed,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                    ),
-                    child: const Text(
-                      'Previous',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  CupertinoTextButton(
-                    onPressed: _onNextPressed,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                    ),
-                    child: const Text(
-                      'Next',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ),
         ),
       ],

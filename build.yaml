@@ -8,16 +8,16 @@ targets:
       gql_build|op_builder:
         enabled: true
         options:
-          schema: flutter_desktop|lib/third_party/github_graphql_schema/schema.docs.graphql
+          schema: github_desktop|lib/third_party/github_graphql_schema/schema.docs.graphql
       gql_build|data_builder:
         enabled: true
         options:
-          schema: flutter_desktop|lib/third_party/github_graphql_schema/schema.docs.graphql
+          schema: github_desktop|lib/third_party/github_graphql_schema/schema.docs.graphql
       gql_build|req_builder:
         enabled: true
         options:
-          schema: flutter_desktop|lib/third_party/github_graphql_schema/schema.docs.graphql
+          schema: github_desktop|lib/third_party/github_graphql_schema/schema.docs.graphql
       gql_build|var_builder:
         enabled: true
         options:
-          schema: flutter_desktop|lib/third_party/github_graphql_schema/schema.docs.graphql
+          schema: github_desktop|lib/third_party/github_graphql_schema/schema.docs.graphql

@@ -608,12 +608,27 @@ class $Repositories$search {
   final Map<String, dynamic> data;
 
   int get repositoryCount => (data['repositoryCount'] as int);
+  $Repositories$search$pageInfo get pageInfo => data['pageInfo'] == null
+      ? null
+      : $Repositories$search$pageInfo(
+          (data['pageInfo'] as Map<String, dynamic>));
   List<$Repositories$search$edges> get edges => data['edges'] == null
       ? null
       : (data['edges'] as List)
           .map((dynamic e) =>
               $Repositories$search$edges((e as Map<String, dynamic>)))
           .toList();
+}
+
+class $Repositories$search$pageInfo {
+  const $Repositories$search$pageInfo(this.data);
+
+  final Map<String, dynamic> data;
+
+  String get endCursor => (data['endCursor'] as String);
+  bool get hasNextPage => (data['hasNextPage'] as bool);
+  bool get hasPreviousPage => (data['hasPreviousPage'] as bool);
+  String get startCursor => (data['startCursor'] as String);
 }
 
 class $Repositories$search$edges {

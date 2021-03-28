@@ -3067,6 +3067,9 @@ const CheckRun = _i1.ObjectTypeDefinitionNode(
     interfaces: [
       _i1.NamedTypeNode(name: _i1.NameNode(value: 'Node'), isNonNull: false),
       _i1.NamedTypeNode(
+          name: _i1.NameNode(value: 'RequirableByPullRequest'),
+          isNonNull: false),
+      _i1.NamedTypeNode(
           name: _i1.NameNode(value: 'UniformResourceLocatable'),
           isNonNull: false)
     ],
@@ -3146,6 +3149,25 @@ const CheckRun = _i1.ObjectTypeDefinitionNode(
           args: [],
           type: _i1.NamedTypeNode(
               name: _i1.NameNode(value: 'ID'), isNonNull: true)),
+      _i1.FieldDefinitionNode(
+          name: _i1.NameNode(value: 'isRequired'),
+          directives: [],
+          args: [
+            _i1.InputValueDefinitionNode(
+                name: _i1.NameNode(value: 'pullRequestId'),
+                directives: [],
+                type: _i1.NamedTypeNode(
+                    name: _i1.NameNode(value: 'ID'), isNonNull: false),
+                defaultValue: null),
+            _i1.InputValueDefinitionNode(
+                name: _i1.NameNode(value: 'pullRequestNumber'),
+                directives: [],
+                type: _i1.NamedTypeNode(
+                    name: _i1.NameNode(value: 'Int'), isNonNull: false),
+                defaultValue: null)
+          ],
+          type: _i1.NamedTypeNode(
+              name: _i1.NameNode(value: 'Boolean'), isNonNull: true)),
       _i1.FieldDefinitionNode(
           name: _i1.NameNode(value: 'name'),
           directives: [],
@@ -32418,6 +32440,19 @@ const PullRequest = _i1.ObjectTypeDefinitionNode(
           type: _i1.NamedTypeNode(
               name: _i1.NameNode(value: 'Boolean'), isNonNull: true)),
       _i1.FieldDefinitionNode(
+          name: _i1.NameNode(value: 'viewerLatestReview'),
+          directives: [],
+          args: [],
+          type: _i1.NamedTypeNode(
+              name: _i1.NameNode(value: 'PullRequestReview'),
+              isNonNull: false)),
+      _i1.FieldDefinitionNode(
+          name: _i1.NameNode(value: 'viewerLatestReviewRequest'),
+          directives: [],
+          args: [],
+          type: _i1.NamedTypeNode(
+              name: _i1.NameNode(value: 'ReviewRequest'), isNonNull: false)),
+      _i1.FieldDefinitionNode(
           name: _i1.NameNode(value: 'viewerMergeBodyText'),
           directives: [],
           args: [
@@ -35988,6 +36023,12 @@ const RefUpdateRule = _i1.ObjectTypeDefinitionNode(
                   name: _i1.NameNode(value: 'String'), isNonNull: false),
               isNonNull: false)),
       _i1.FieldDefinitionNode(
+          name: _i1.NameNode(value: 'requiresCodeOwnerReviews'),
+          directives: [],
+          args: [],
+          type: _i1.NamedTypeNode(
+              name: _i1.NameNode(value: 'Boolean'), isNonNull: true)),
+      _i1.FieldDefinitionNode(
           name: _i1.NameNode(value: 'requiresLinearHistory'),
           directives: [],
           args: [],
@@ -35995,6 +36036,12 @@ const RefUpdateRule = _i1.ObjectTypeDefinitionNode(
               name: _i1.NameNode(value: 'Boolean'), isNonNull: true)),
       _i1.FieldDefinitionNode(
           name: _i1.NameNode(value: 'requiresSignatures'),
+          directives: [],
+          args: [],
+          type: _i1.NamedTypeNode(
+              name: _i1.NameNode(value: 'Boolean'), isNonNull: true)),
+      _i1.FieldDefinitionNode(
+          name: _i1.NameNode(value: 'viewerAllowedToDismissReviews'),
           directives: [],
           args: [],
           type: _i1.NamedTypeNode(
@@ -43456,6 +43503,30 @@ const RequestedReviewer = _i1.UnionTypeDefinitionNode(
       _i1.NamedTypeNode(name: _i1.NameNode(value: 'Team'), isNonNull: false),
       _i1.NamedTypeNode(name: _i1.NameNode(value: 'User'), isNonNull: false)
     ]);
+const RequirableByPullRequest = _i1.InterfaceTypeDefinitionNode(
+    name: _i1.NameNode(value: 'RequirableByPullRequest'),
+    directives: [],
+    fields: [
+      _i1.FieldDefinitionNode(
+          name: _i1.NameNode(value: 'isRequired'),
+          directives: [],
+          args: [
+            _i1.InputValueDefinitionNode(
+                name: _i1.NameNode(value: 'pullRequestId'),
+                directives: [],
+                type: _i1.NamedTypeNode(
+                    name: _i1.NameNode(value: 'ID'), isNonNull: false),
+                defaultValue: null),
+            _i1.InputValueDefinitionNode(
+                name: _i1.NameNode(value: 'pullRequestNumber'),
+                directives: [],
+                type: _i1.NamedTypeNode(
+                    name: _i1.NameNode(value: 'Int'), isNonNull: false),
+                defaultValue: null)
+          ],
+          type: _i1.NamedTypeNode(
+              name: _i1.NameNode(value: 'Boolean'), isNonNull: true))
+    ]);
 const RerequestCheckSuiteInput = _i1.InputObjectTypeDefinitionNode(
     name: _i1.NameNode(value: 'RerequestCheckSuiteInput'),
     directives: [],
@@ -45470,6 +45541,12 @@ const SponsorsTier = _i1.ObjectTypeDefinitionNode(
               name: _i1.NameNode(value: 'SponsorsTierAdminInfo'),
               isNonNull: false)),
       _i1.FieldDefinitionNode(
+          name: _i1.NameNode(value: 'closestLesserValueTier'),
+          directives: [],
+          args: [],
+          type: _i1.NamedTypeNode(
+              name: _i1.NameNode(value: 'SponsorsTier'), isNonNull: false)),
+      _i1.FieldDefinitionNode(
           name: _i1.NameNode(value: 'createdAt'),
           directives: [],
           args: [],
@@ -45493,6 +45570,18 @@ const SponsorsTier = _i1.ObjectTypeDefinitionNode(
           args: [],
           type: _i1.NamedTypeNode(
               name: _i1.NameNode(value: 'ID'), isNonNull: true)),
+      _i1.FieldDefinitionNode(
+          name: _i1.NameNode(value: 'isCustomAmount'),
+          directives: [],
+          args: [],
+          type: _i1.NamedTypeNode(
+              name: _i1.NameNode(value: 'Boolean'), isNonNull: true)),
+      _i1.FieldDefinitionNode(
+          name: _i1.NameNode(value: 'isOneTime'),
+          directives: [],
+          args: [],
+          type: _i1.NamedTypeNode(
+              name: _i1.NameNode(value: 'Boolean'), isNonNull: true)),
       _i1.FieldDefinitionNode(
           name: _i1.NameNode(value: 'monthlyPriceInCents'),
           directives: [],
@@ -45674,6 +45763,12 @@ const Sponsorship = _i1.ObjectTypeDefinitionNode(
           args: [],
           type: _i1.NamedTypeNode(
               name: _i1.NameNode(value: 'ID'), isNonNull: true)),
+      _i1.FieldDefinitionNode(
+          name: _i1.NameNode(value: 'isOneTimePayment'),
+          directives: [],
+          args: [],
+          type: _i1.NamedTypeNode(
+              name: _i1.NameNode(value: 'Boolean'), isNonNull: true)),
       _i1.FieldDefinitionNode(
           name: _i1.NameNode(value: 'maintainer'),
           directives: [
@@ -46234,7 +46329,10 @@ const StatusContext = _i1.ObjectTypeDefinitionNode(
     name: _i1.NameNode(value: 'StatusContext'),
     directives: [],
     interfaces: [
-      _i1.NamedTypeNode(name: _i1.NameNode(value: 'Node'), isNonNull: false)
+      _i1.NamedTypeNode(name: _i1.NameNode(value: 'Node'), isNonNull: false),
+      _i1.NamedTypeNode(
+          name: _i1.NameNode(value: 'RequirableByPullRequest'),
+          isNonNull: false)
     ],
     fields: [
       _i1.FieldDefinitionNode(
@@ -46286,6 +46384,25 @@ const StatusContext = _i1.ObjectTypeDefinitionNode(
           args: [],
           type: _i1.NamedTypeNode(
               name: _i1.NameNode(value: 'ID'), isNonNull: true)),
+      _i1.FieldDefinitionNode(
+          name: _i1.NameNode(value: 'isRequired'),
+          directives: [],
+          args: [
+            _i1.InputValueDefinitionNode(
+                name: _i1.NameNode(value: 'pullRequestId'),
+                directives: [],
+                type: _i1.NamedTypeNode(
+                    name: _i1.NameNode(value: 'ID'), isNonNull: false),
+                defaultValue: null),
+            _i1.InputValueDefinitionNode(
+                name: _i1.NameNode(value: 'pullRequestNumber'),
+                directives: [],
+                type: _i1.NamedTypeNode(
+                    name: _i1.NameNode(value: 'Int'), isNonNull: false),
+                defaultValue: null)
+          ],
+          type: _i1.NamedTypeNode(
+              name: _i1.NameNode(value: 'Boolean'), isNonNull: true)),
       _i1.FieldDefinitionNode(
           name: _i1.NameNode(value: 'state'),
           directives: [],
@@ -56048,6 +56165,7 @@ const document = _i1.DocumentNode(definitions: [
   RequestReviewsPayload,
   RequestableCheckStatusState,
   RequestedReviewer,
+  RequirableByPullRequest,
   RerequestCheckSuiteInput,
   RerequestCheckSuitePayload,
   ResolveReviewThreadInput,

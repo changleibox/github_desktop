@@ -756,15 +756,33 @@ const Repositories = _i1.OperationDefinitionNode(
           defaultValue: _i1.DefaultValueNode(value: null),
           directives: []),
       _i1.VariableDefinitionNode(
-          variable: _i1.VariableNode(name: _i1.NameNode(value: 'count')),
+          variable: _i1.VariableNode(name: _i1.NameNode(value: 'first')),
           type: _i1.NamedTypeNode(
-              name: _i1.NameNode(value: 'Int'), isNonNull: true),
+              name: _i1.NameNode(value: 'Int'), isNonNull: false),
+          defaultValue: _i1.DefaultValueNode(value: null),
+          directives: []),
+      _i1.VariableDefinitionNode(
+          variable: _i1.VariableNode(name: _i1.NameNode(value: 'last')),
+          type: _i1.NamedTypeNode(
+              name: _i1.NameNode(value: 'Int'), isNonNull: false),
           defaultValue: _i1.DefaultValueNode(value: null),
           directives: []),
       _i1.VariableDefinitionNode(
           variable: _i1.VariableNode(name: _i1.NameNode(value: 'historySince')),
           type: _i1.NamedTypeNode(
               name: _i1.NameNode(value: 'GitTimestamp'), isNonNull: false),
+          defaultValue: _i1.DefaultValueNode(value: null),
+          directives: []),
+      _i1.VariableDefinitionNode(
+          variable: _i1.VariableNode(name: _i1.NameNode(value: 'before')),
+          type: _i1.NamedTypeNode(
+              name: _i1.NameNode(value: 'String'), isNonNull: false),
+          defaultValue: _i1.DefaultValueNode(value: null),
+          directives: []),
+      _i1.VariableDefinitionNode(
+          variable: _i1.VariableNode(name: _i1.NameNode(value: 'after')),
+          type: _i1.NamedTypeNode(
+              name: _i1.NameNode(value: 'String'), isNonNull: false),
           defaultValue: _i1.DefaultValueNode(value: null),
           directives: [])
     ],
@@ -783,7 +801,16 @@ const Repositories = _i1.OperationDefinitionNode(
                     _i1.EnumValueNode(name: _i1.NameNode(value: 'REPOSITORY'))),
             _i1.ArgumentNode(
                 name: _i1.NameNode(value: 'first'),
-                value: _i1.VariableNode(name: _i1.NameNode(value: 'count')))
+                value: _i1.VariableNode(name: _i1.NameNode(value: 'first'))),
+            _i1.ArgumentNode(
+                name: _i1.NameNode(value: 'last'),
+                value: _i1.VariableNode(name: _i1.NameNode(value: 'last'))),
+            _i1.ArgumentNode(
+                name: _i1.NameNode(value: 'after'),
+                value: _i1.VariableNode(name: _i1.NameNode(value: 'after'))),
+            _i1.ArgumentNode(
+                name: _i1.NameNode(value: 'before'),
+                value: _i1.VariableNode(name: _i1.NameNode(value: 'before')))
           ],
           directives: [],
           selectionSet: _i1.SelectionSetNode(selections: [
@@ -793,6 +820,37 @@ const Repositories = _i1.OperationDefinitionNode(
                 arguments: [],
                 directives: [],
                 selectionSet: null),
+            _i1.FieldNode(
+                name: _i1.NameNode(value: 'pageInfo'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: _i1.SelectionSetNode(selections: [
+                  _i1.FieldNode(
+                      name: _i1.NameNode(value: 'endCursor'),
+                      alias: null,
+                      arguments: [],
+                      directives: [],
+                      selectionSet: null),
+                  _i1.FieldNode(
+                      name: _i1.NameNode(value: 'hasNextPage'),
+                      alias: null,
+                      arguments: [],
+                      directives: [],
+                      selectionSet: null),
+                  _i1.FieldNode(
+                      name: _i1.NameNode(value: 'hasPreviousPage'),
+                      alias: null,
+                      arguments: [],
+                      directives: [],
+                      selectionSet: null),
+                  _i1.FieldNode(
+                      name: _i1.NameNode(value: 'startCursor'),
+                      alias: null,
+                      arguments: [],
+                      directives: [],
+                      selectionSet: null)
+                ])),
             _i1.FieldNode(
                 name: _i1.NameNode(value: 'edges'),
                 alias: null,

@@ -34,7 +34,7 @@ class _PopularRepositoriesState extends State<PopularRepositories> {
     final queryParams = <String>['user:${userModel.viewer.login}', 'fork:true', 'sort:stars', 'fork:false'];
     final response = await userModel.request(Repositories((b) {
       return b
-        ..count = 6
+        ..first = 6
         ..query = queryParams.join(' ')
         ..historySince = DateFormatUtils.formattedLastYear;
     }));
