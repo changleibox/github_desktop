@@ -8,13 +8,6 @@ import 'package:github_desktop/widget/future_wrapper_view.dart';
 /// 构建item
 typedef FutureIndexedWidgetBuilder<T> = Widget Function(BuildContext context, int index, T item);
 
-/// 构建list
-typedef FutureListWidgetBuilder<T> = Widget Function(
-  BuildContext context,
-  Widget child,
-  AsyncSnapshot<List<T>> snapshot,
-);
-
 /// Created by changlei on 3/8/21.
 ///
 /// 异步处理的listView
@@ -43,34 +36,40 @@ class FutureListView<T> extends StatelessWidget {
   final AsyncWidgetBuilder placeholderBuilder;
 
   /// listView
-  final FutureListWidgetBuilder<T> builder;
+  final FutureWidgetBuilder<List<T>> builder;
 
   @override
   Widget build(BuildContext context) {
     return FutureWrapperView<List<T>>(
       future: future,
       placeholderBuilder: placeholderBuilder,
-      builder: (context, snapshot) {
-        final data = snapshot.data;
-        Widget child;
-        if (separatorBuilder == null) {
-          child = ListView.builder(
-            itemBuilder: (context, index) {
-              return itemBuilder(context, index, data[index]);
-            },
-            itemCount: data.length,
-          );
-        } else {
-          child = ListView.separated(
-            itemBuilder: (context, index) {
-              return itemBuilder(context, index, data[index]);
-            },
-            separatorBuilder: separatorBuilder,
-            itemCount: data.length,
-          );
-        }
-        return builder?.call(context, child, snapshot) ?? child;
+      builder: (context, child, snapshot) {
+        final content = _buildChild(context, child, snapshot);
+        return builder?.call(context, content, snapshot) ?? content;
       },
     );
+  }
+
+  Widget _buildChild(BuildContext context, Widget child, AsyncSnapshot<List<T>> snapshot) {
+    final data = snapshot.data;
+    if (data?.isNotEmpty != true) {
+      return child;
+    }
+    if (separatorBuilder == null) {
+      return ListView.builder(
+        itemBuilder: (context, index) {
+          return itemBuilder(context, index, data[index]);
+        },
+        itemCount: data.length,
+      );
+    } else {
+      return ListView.separated(
+        itemBuilder: (context, index) {
+          return itemBuilder(context, index, data[index]);
+        },
+        separatorBuilder: separatorBuilder,
+        itemCount: data.length,
+      );
+    }
   }
 }

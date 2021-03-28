@@ -5,6 +5,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:github_desktop/widget/no_data.dart';
 
+/// 构建内容
+typedef FutureWidgetBuilder<T> = Widget Function(
+  BuildContext context,
+  Widget child,
+  AsyncSnapshot<T> snapshot,
+);
+
 /// Created by changlei on 3/8/21.
 ///
 /// 异步处理的listView
@@ -22,7 +29,7 @@ class FutureWrapperView<T> extends StatefulWidget {
   final Future<T> future;
 
   /// listView
-  final AsyncWidgetBuilder<T> builder;
+  final FutureWidgetBuilder<T> builder;
 
   /// 构建placeholder
   final AsyncWidgetBuilder<T> placeholderBuilder;
@@ -40,24 +47,32 @@ class _FutureWrapperViewState<T> extends State<FutureWrapperView<T>> {
       initialData: _lastValues,
       future: widget.future,
       builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Center(
-            child: Text('${snapshot.error}'),
-          );
+        final child = _buildChild(context, snapshot);
+        if (child == null) {
+          _lastValues = snapshot.data;
         }
-        final data = snapshot.data;
-        if (!snapshot.hasData || (data is Iterable && data.isEmpty)) {
-          if (snapshot.connectionState == ConnectionState.waiting && _lastValues == null) {
-            return const Center(
-              child: CupertinoActivityIndicator(),
-            );
-          } else {
-            return widget?.placeholderBuilder?.call(context, snapshot) ?? NoData();
-          }
-        }
-        _lastValues = data;
-        return widget.builder.call(context, snapshot);
+        return widget.builder.call(context, child, snapshot);
       },
     );
+  }
+
+  Widget _buildChild(BuildContext context, AsyncSnapshot<T> snapshot) {
+    Widget child;
+    if (snapshot.hasError) {
+      child = Center(
+        child: Text('${snapshot.error}'),
+      );
+    }
+    final data = snapshot.data;
+    if (!snapshot.hasData || (data is Iterable && data.isEmpty)) {
+      if (snapshot.connectionState == ConnectionState.waiting && _lastValues == null) {
+        child = const Center(
+          child: CupertinoActivityIndicator(),
+        );
+      } else {
+        child = widget?.placeholderBuilder?.call(context, snapshot) ?? NoData();
+      }
+    }
+    return child;
   }
 }

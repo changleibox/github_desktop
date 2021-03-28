@@ -104,7 +104,10 @@ class _PopularRepositoriesState extends State<PopularRepositories> {
             ),
             child: FutureWrapperView<List<$Repositories$search$edges$node$asRepository>>(
               future: _repositories,
-              builder: (context, snapshot) {
+              builder: (context, child, snapshot) {
+                if (snapshot.data?.isNotEmpty != true) {
+                  return child;
+                }
                 final data = snapshot.data;
                 return GridLayout(
                   crossAxisCount: 2,
