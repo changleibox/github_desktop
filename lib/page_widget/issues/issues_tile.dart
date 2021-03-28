@@ -96,8 +96,15 @@ class IssuesTile extends StatelessWidget {
             text: '#${item.number} opened on ',
           ),
           WidgetSpan(
-            child: AutoUpdateDate(
-              dateTime: item.createdAt.value,
+            child: DefaultTextStyle(
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.normal,
+                color: colorTextSecondary,
+              ),
+              child: AutoUpdateDate(
+                dateTime: item.createdAt.value,
+              ),
             ),
           ),
           TextSpan(

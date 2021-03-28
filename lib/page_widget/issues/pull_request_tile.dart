@@ -5,6 +5,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/github_gql/github_queries.data.gql.dart';
 import 'package:github_desktop/util/launch_utils.dart';
 import 'package:github_desktop/widget/auto_update_date.dart';
@@ -97,8 +98,15 @@ class PullRequestsTile extends StatelessWidget {
             text: '#${item.number} opened on ',
           ),
           WidgetSpan(
-            child: AutoUpdateDate(
-              dateTime: item.createdAt.value,
+            child: DefaultTextStyle(
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.normal,
+                color: colorTextSecondary,
+              ),
+              child: AutoUpdateDate(
+                dateTime: item.createdAt.value,
+              ),
             ),
           ),
           TextSpan(
