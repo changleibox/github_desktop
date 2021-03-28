@@ -2,8 +2,10 @@
  * Copyright (c) 2021 CHANGLEI. All rights reserved.
  */
 
+import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:github_desktop/common/resources.dart';
+import 'package:github_desktop/widget/cupertino_text_button.dart';
 
 /// Created by changlei on 3/8/21.
 ///
@@ -44,16 +46,17 @@ class CupertinoListTile extends StatelessWidget {
       padding: padding,
       child: Container(
         width: double.infinity,
-        child: Row(
+        child: WidgetGroup.spacing(
           crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 20,
           children: [
             Expanded(
-              child: Column(
+              child: WidgetGroup.spacing(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                direction: Axis.vertical,
+                spacing: 8,
                 children: [
-                  CupertinoButton(
-                    padding: EdgeInsets.zero,
-                    minSize: 0,
+                  CupertinoTextButton(
                     onPressed: onPressed,
                     child: DefaultTextStyle(
                       style: const TextStyle(
@@ -81,13 +84,7 @@ class CupertinoListTile extends StatelessWidget {
                 ],
               ),
             ),
-            if (trailing != null)
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                ),
-                child: trailing,
-              ),
+            if (trailing != null) trailing,
           ],
         ),
       ),
