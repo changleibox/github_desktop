@@ -444,6 +444,7 @@ class _IssuesActivity extends StatelessWidget {
         direction: Axis.vertical,
         itemCount: 1,
         itemBuilder: (context, index) {
+          final textTheme = CupertinoTheme.of(context).textTheme;
           return Container(
             padding: const EdgeInsets.all(16),
             child: IconLabel(
@@ -467,14 +468,14 @@ class _IssuesActivity extends StatelessWidget {
                   children: <Widget>[
                     HoverButton(
                       hoverStyle: HoverStyle.solid,
+                      foregroundColor: textTheme.textStyle.color,
                       onPressed: () {},
-                      child: Text(
+                      child: const Text(
                         '[IOS] When the obscureText parameter of CupertinoTextField is set to true, '
                         'the focus is requested, then the focus is lost, and the application crashes',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
-                          color: CupertinoTheme.of(context).textTheme.textStyle.color,
                         ),
                       ),
                     ),

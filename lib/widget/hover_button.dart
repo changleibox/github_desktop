@@ -21,6 +21,7 @@ enum HoverStyle {
 }
 
 const _hoverColor = Color(0xfff6f8fa);
+const _duration = Duration(milliseconds: 200);
 
 /// Created by box on 3/27/21.
 ///
@@ -39,12 +40,11 @@ class HoverButton extends StatelessWidget {
     this.foregroundColor,
     this.hoverForegroundColor,
     this.borderRadius = const BorderRadius.all(Radius.circular(6)),
-    this.cursor = SystemMouseCursors.click,
+    this.cursor,
     this.onPressed,
   })  : assert(child != null),
         assert(alignment != null),
         assert(hoverStyle != null),
-        assert(cursor != null),
         super(key: key);
 
   /// child
@@ -116,31 +116,41 @@ class HoverButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeData = CupertinoTheme.of(context);
-    final textColor = themeData.primaryColor;
+    final primaryColor = themeData.primaryColor;
+    final textColor = foregroundColor ?? primaryColor;
+    final hoverTextColor = hoverForegroundColor ?? primaryColor;
     return HoverRegion(
-      cursor: cursor,
+      cursor: cursor ?? (enabled ? SystemMouseCursors.click : SystemMouseCursors.forbidden),
       builder: (context, child, hover) {
-        var textStyle = TextStyle(
-          fontSize: 14,
+        var backgroundColor = color;
+        Color foregroundColor;
+        if (backgroundColor != null) {
+          foregroundColor = themeData.primaryContrastingColor;
+        } else if (enabled) {
+          foregroundColor = textColor;
+        } else {
+          foregroundColor = textColor.withOpacity(0.5);
+        }
+
+        var textStyle = themeData.textTheme.textStyle.copyWith(
           color: foregroundColor,
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
         );
-        var color = this.color;
         final tinting = hover && enabled;
         switch (hoverStyle) {
           case HoverStyle.none:
             textStyle = textStyle.copyWith(
-              color: tinting ? hoverForegroundColor ?? textColor : textStyle.color,
-              fontWeight: FontWeight.normal,
+              color: tinting ? hoverTextColor : null,
             );
             break;
           case HoverStyle.plain:
-            color = color ?? (tinting ? hoverColor : null);
+            backgroundColor ??= tinting ? hoverColor : null;
             break;
           case HoverStyle.highlight:
-            color = color ?? (tinting ? textColor : null);
+            backgroundColor ??= tinting ? primaryColor : null;
             textStyle = textStyle.copyWith(
-              color: tinting ? themeData.primaryContrastingColor : textStyle.color ?? textColor,
-              fontWeight: FontWeight.normal,
+              color: tinting ? themeData.primaryContrastingColor : null,
             );
             break;
           case HoverStyle.solid:
@@ -150,30 +160,29 @@ class HoverButton extends StatelessWidget {
             );
             break;
         }
-        return CupertinoButton(
-          onPressed: onPressed,
-          padding: padding,
-          alignment: alignment,
-          color: color,
-          minSize: minSize,
-          borderRadius: borderRadius,
-          child: Builder(
-            builder: (context) {
-              final style = DefaultTextStyle.of(context).style.merge(textStyle);
-              final textColor = style.color;
-              return AnimatedDefaultTextStyle(
-                duration: const Duration(milliseconds: 200),
-                style: style.copyWith(
-                  color: enabled ? textColor : textColor.withOpacity(0.5),
+        return AnimatedContainer(
+          duration: _duration,
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: borderRadius,
+          ),
+          child: CupertinoButton(
+            onPressed: onPressed,
+            padding: padding,
+            alignment: alignment,
+            // color: color,
+            minSize: minSize,
+            borderRadius: borderRadius,
+            child: AnimatedDefaultTextStyle(
+              duration: _duration,
+              style: textStyle,
+              child: IconTheme(
+                data: IconThemeData(
+                  color: textStyle.color,
                 ),
-                child: IconTheme(
-                  data: IconThemeData(
-                    color: textStyle.color,
-                  ),
-                  child: child,
-                ),
-              );
-            },
+                child: child,
+              ),
+            ),
           ),
         );
       },
