@@ -9,6 +9,7 @@ import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/github_gql/github_queries.data.gql.dart';
 import 'package:github_desktop/util/launch_utils.dart';
 import 'package:github_desktop/widget/auto_update_date.dart';
+import 'package:github_desktop/widget/hover_button.dart';
 import 'package:github_desktop/widget/list_tile.dart';
 import 'package:fluttericon/octicons_icons.dart';
 
@@ -127,18 +128,22 @@ class IssuesTile extends StatelessWidget {
               const Spacer()
             else
               Expanded(
-                child: IconLabel(
-                  alignment: MainAxisAlignment.end,
-                  horizontalSpacing: 4,
-                  leftIcon: Icon(
-                    Octicons.git_pull_request,
-                    size: 16,
-                    color: textColor,
-                  ),
-                  label: Text(
-                    '$pullRequestCount',
-                    style: const TextStyle(
-                      height: 1,
+                child: HoverButton(
+                  onPressed: () {},
+                  alignment: Alignment.centerRight,
+                  foregroundColor: textColor,
+                  child: IconLabel(
+                    alignment: MainAxisAlignment.end,
+                    horizontalSpacing: 4,
+                    leftIcon: const Icon(
+                      Octicons.git_pull_request,
+                      size: 16,
+                    ),
+                    label: Text(
+                      '$pullRequestCount',
+                      style: const TextStyle(
+                        height: 1,
+                      ),
                     ),
                   ),
                 ),
@@ -149,12 +154,15 @@ class IssuesTile extends StatelessWidget {
               Expanded(
                 child: Container(
                   alignment: Alignment.centerRight,
-                  child: ClipOval(
-                    child: CachedNetworkImage(
-                      imageUrl: assigneeAvatar ?? '',
-                      width: 20,
-                      height: 20,
-                      fit: BoxFit.cover,
+                  child: HoverButton(
+                    onPressed: () {},
+                    child: ClipOval(
+                      child: CachedNetworkImage(
+                        imageUrl: assigneeAvatar ?? '',
+                        width: 20,
+                        height: 20,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
@@ -163,18 +171,22 @@ class IssuesTile extends StatelessWidget {
               const Spacer()
             else
               Expanded(
-                child: IconLabel(
-                  alignment: MainAxisAlignment.end,
-                  horizontalSpacing: 4,
-                  leftIcon: Icon(
-                    Octicons.comment,
-                    size: 16,
-                    color: textColor,
-                  ),
-                  label: Text(
-                    '${item.comments.totalCount}',
-                    style: const TextStyle(
-                      height: 1,
+                child: HoverButton(
+                  onPressed: () {},
+                  alignment: Alignment.centerRight,
+                  foregroundColor: textColor,
+                  child: IconLabel(
+                    alignment: MainAxisAlignment.end,
+                    horizontalSpacing: 4,
+                    leftIcon: const Icon(
+                      Octicons.comment,
+                      size: 16,
+                    ),
+                    label: Text(
+                      '${item.comments.totalCount}',
+                      style: const TextStyle(
+                        height: 1,
+                      ),
                     ),
                   ),
                 ),

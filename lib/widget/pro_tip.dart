@@ -5,7 +5,7 @@
 import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttericon/octicons_icons.dart';
-import 'package:github_desktop/widget/cupertino_text_button.dart';
+import 'package:github_desktop/widget/hover_button.dart';
 
 /// Created by changlei on 3/8/21.
 ///
@@ -35,8 +35,9 @@ class ProTip extends StatelessWidget {
               text: ' Updated in the last three days: ',
             ),
             WidgetSpan(
-              child: CupertinoTextButton(
+              child: HoverButton(
                 onPressed: () {},
+                hoverStyle: HoverStyle.solid,
                 child: const Text(
                   'updated:>2021-03-04',
                   style: TextStyle(

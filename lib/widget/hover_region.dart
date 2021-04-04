@@ -30,22 +30,23 @@ class HoverRegion extends StatefulWidget {
 }
 
 class _HoverRegionState extends State<HoverRegion> {
-  bool _hover = false;
+  bool _hovered = false;
 
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-      onHover: (event) {
+      cursor: SystemMouseCursors.click,
+      onEnter: (event) {
         setState(() {
-          _hover = true;
+          _hovered = true;
         });
       },
       onExit: (event) {
         setState(() {
-          _hover = false;
+          _hovered = false;
         });
       },
-      child: widget.builder(context, widget.child, _hover),
+      child: widget.builder(context, widget.child, _hovered),
     );
   }
 }

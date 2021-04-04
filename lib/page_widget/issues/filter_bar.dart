@@ -2,13 +2,15 @@
  * Copyright (c) 2021 CHANGLEI. All rights reserved.
  */
 
+import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttericon/octicons_icons.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/model/user_model.dart';
 import 'package:github_desktop/widget/filter_button.dart';
 import 'package:github_desktop/widget/github_user.dart';
-import 'package:fluttericon/octicons_icons.dart';
+import 'package:github_desktop/widget/hover_button.dart';
 import 'package:provider/provider.dart';
 
 /// Created by changlei on 3/8/21.
@@ -54,69 +56,62 @@ class _IssuesFilterBarState extends State<IssuesFilterBar> {
       padding: const EdgeInsets.all(16),
       child: Row(
         children: [
-          CupertinoButton(
-            padding: EdgeInsets.zero,
-            minSize: 0,
+          HoverButton(
+            foregroundColor: _isOpen ? textColor : colorTextSecondary,
             onPressed: () {
               setState(() {
                 _isOpen = true;
               });
               widget.onOpened?.call(true);
             },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconTheme(
-                  data: IconThemeData(
-                    size: 16,
-                    color: _isOpen ? textColor : colorTextSecondary,
-                  ),
-                  child: widget.icon,
+            child: IconLabel(
+              alignment: MainAxisAlignment.end,
+              horizontalSpacing: 4,
+              leftIcon: Builder(
+                builder: (context) {
+                  final iconThemeData = IconTheme.of(context);
+                  return IconTheme(
+                    data: IconThemeData(
+                      size: 16,
+                      color: iconThemeData.color,
+                      opacity: iconThemeData.opacity,
+                    ),
+                    child: widget.icon,
+                  );
+                },
+              ),
+              label: Text(
+                '${widget.openedCount ?? 0} Open',
+                style: TextStyle(
+                  fontWeight: _isOpen ? FontWeight.w600 : FontWeight.normal,
                 ),
-                const SizedBox(
-                  width: 4,
-                ),
-                Text(
-                  '${widget.openedCount ?? 0} Open',
-                  style: TextStyle(
-                    color: _isOpen ? textColor : colorTextSecondary,
-                    fontWeight: _isOpen ? FontWeight.w600 : FontWeight.normal,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
           const SizedBox(
             width: 15,
           ),
-          CupertinoButton(
-            padding: EdgeInsets.zero,
-            minSize: 0,
+          HoverButton(
+            foregroundColor: !_isOpen ? textColor : colorTextSecondary,
             onPressed: () {
               setState(() {
                 _isOpen = false;
               });
               widget.onOpened?.call(false);
             },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Icon(
-                  Octicons.check,
-                  size: 16,
-                  color: !_isOpen ? textColor : colorTextSecondary,
+            child: IconLabel(
+              alignment: MainAxisAlignment.end,
+              horizontalSpacing: 4,
+              leftIcon: const Icon(
+                Octicons.check,
+                size: 16,
+              ),
+              label: Text(
+                '${widget.closedCount ?? 0} Closed',
+                style: TextStyle(
+                  fontWeight: !_isOpen ? FontWeight.w600 : FontWeight.normal,
                 ),
-                const SizedBox(
-                  width: 4,
-                ),
-                Text(
-                  '${widget.closedCount ?? 0} Closed',
-                  style: TextStyle(
-                    color: !_isOpen ? textColor : colorTextSecondary,
-                    fontWeight: !_isOpen ? FontWeight.w600 : FontWeight.normal,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
           const Spacer(),
@@ -126,24 +121,17 @@ class _IssuesFilterBarState extends State<IssuesFilterBar> {
               'Private repositories only',
               'Public repositories only',
             ],
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: const [
-                Text(
-                  'Visibility',
-                  style: TextStyle(
-                    color: colorTextSecondary,
-                  ),
-                ),
-                SizedBox(
-                  width: 4,
-                ),
-                Icon(
-                  Octicons.triangle_down,
-                  size: 8,
-                  color: colorTextSecondary,
-                ),
-              ],
+            textColor: colorTextSecondary,
+            child: const IconLabel(
+              alignment: MainAxisAlignment.end,
+              horizontalSpacing: 4,
+              label: Text(
+                'Visibility',
+              ),
+              rightIcon: Icon(
+                Octicons.triangle_down,
+                size: 8,
+              ),
             ),
           ),
           const SizedBox(
@@ -151,7 +139,7 @@ class _IssuesFilterBarState extends State<IssuesFilterBar> {
           ),
           AgileFilterButton(
             title: const Text('Filter by organization or owner'),
-            children: [
+            items: [
               Container(
                 margin: const EdgeInsets.all(8),
                 child: const CupertinoTextField(
@@ -190,24 +178,17 @@ class _IssuesFilterBarState extends State<IssuesFilterBar> {
                 ),
               ),
             ],
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: const [
-                Text(
-                  'Organization',
-                  style: TextStyle(
-                    color: colorTextSecondary,
-                  ),
-                ),
-                SizedBox(
-                  width: 4,
-                ),
-                Icon(
-                  Octicons.triangle_down,
-                  size: 8,
-                  color: colorTextSecondary,
-                ),
-              ],
+            textColor: colorTextSecondary,
+            child: const IconLabel(
+              alignment: MainAxisAlignment.end,
+              horizontalSpacing: 4,
+              label: Text(
+                'Organization',
+              ),
+              rightIcon: Icon(
+                Octicons.triangle_down,
+                size: 8,
+              ),
             ),
           ),
           const SizedBox(
@@ -219,24 +200,17 @@ class _IssuesFilterBarState extends State<IssuesFilterBar> {
               'Private repositories only',
               'Public repositories only',
             ],
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: const [
-                Text(
-                  'Sort',
-                  style: TextStyle(
-                    color: colorTextSecondary,
-                  ),
-                ),
-                SizedBox(
-                  width: 4,
-                ),
-                Icon(
-                  Octicons.triangle_down,
-                  size: 8,
-                  color: colorTextSecondary,
-                ),
-              ],
+            textColor: colorTextSecondary,
+            child: const IconLabel(
+              alignment: MainAxisAlignment.end,
+              horizontalSpacing: 4,
+              label: Text(
+                'Sort',
+              ),
+              rightIcon: Icon(
+                Octicons.triangle_down,
+                size: 8,
+              ),
             ),
           ),
         ],

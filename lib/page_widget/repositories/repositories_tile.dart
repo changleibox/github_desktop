@@ -43,10 +43,13 @@ class RepositoriesTile extends StatelessWidget {
         ),
         title: WidgetGroup.spacing(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           spacing: 8,
           children: [
-            Text(
-              item.name,
+            Flexible(
+              child: Text(
+                item.name,
+              ),
             ),
             if (item.isPrivate)
               Container(
@@ -67,6 +70,7 @@ class RepositoriesTile extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     color: textStyle.color,
                     fontSize: 12,
+                    decoration: TextDecoration.none,
                   ),
                 ),
               ),

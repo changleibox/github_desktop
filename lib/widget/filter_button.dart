@@ -6,6 +6,7 @@ import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/widget/divider.dart';
+import 'package:github_desktop/widget/hover_button.dart';
 import 'package:github_desktop/widget/support_dropdown_menu.dart';
 import 'package:fluttericon/octicons_icons.dart';
 
@@ -21,6 +22,7 @@ class FilterButton extends StatefulWidget {
     this.title,
     this.indicateSize,
     this.selectedValue,
+    this.textColor,
     this.onChanged,
   })  : assert(child != null),
         assert(items != null && items.length > 0),
@@ -40,6 +42,9 @@ class FilterButton extends StatefulWidget {
 
   /// 选中的value
   final String selectedValue;
+
+  /// 文本颜色
+  final Color textColor;
 
   /// 选中事件
   final ValueChanged<String> onChanged;
@@ -67,10 +72,11 @@ class _FilterButtonState extends State<FilterButton> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoButton(
+    return HoverButton(
       borderRadius: primaryBorderRadius,
       padding: EdgeInsets.zero,
       minSize: 30,
+      foregroundColor: widget.textColor,
       onPressed: () async {
         await showFilterPopupWindow(
           context,
@@ -101,11 +107,12 @@ class AgileFilterButton extends StatelessWidget {
   const AgileFilterButton({
     Key key,
     @required this.child,
-    @required this.children,
+    @required this.items,
     this.title,
     this.indicateSize,
+    this.textColor,
   })  : assert(child != null),
-        assert(children != null),
+        assert(items != null),
         super(key: key);
 
   /// 选项名称
@@ -114,24 +121,28 @@ class AgileFilterButton extends StatelessWidget {
   /// 弹窗框title
   final Widget title;
 
-  /// children
-  final List<Widget> children;
+  /// 筛选项
+  final List<Widget> items;
 
   /// 指示箭头的大小
   final Size indicateSize;
 
+  /// 文本颜色
+  final Color textColor;
+
   @override
   Widget build(BuildContext context) {
-    return CupertinoButton(
+    return HoverButton(
       borderRadius: primaryBorderRadius,
       padding: EdgeInsets.zero,
       minSize: 30,
+      foregroundColor: textColor,
       onPressed: () async {
         await showFilterPopupWindow(
           context,
           title: title,
           indicateSize: indicateSize,
-          children: children,
+          children: items,
         );
       },
       child: child,

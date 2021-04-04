@@ -47,12 +47,14 @@ class CupertinoListTile extends StatelessWidget {
       child: Container(
         width: double.infinity,
         child: WidgetGroup.spacing(
+          alignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 20,
           children: [
-            Expanded(
+            Flexible(
               child: WidgetGroup.spacing(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 direction: Axis.vertical,
                 spacing: 8,
                 children: [
