@@ -646,7 +646,7 @@ class _RenderSegmentedControl<T> extends RenderBox
     }
   }
 
-  Size _calculateChildSize(BoxConstraints constraints) {
+  double _calculateChildHeight(BoxConstraints constraints) {
     var maxHeight = _kMinSegmentedControlHeight;
     var childWidth = constraints.minWidth / childCount;
     var child = firstChild;
@@ -661,32 +661,29 @@ class _RenderSegmentedControl<T> extends RenderBox
       maxHeight = math.max(maxHeight, boxHeight);
       child = childAfter(child);
     }
-    return Size(childWidth, maxHeight);
-  }
-
-  Size _computeOverallSizeFromChildSize(Size childSize) {
-    return constraints.constrain(Size(childSize.width * childCount, childSize.height));
+    return maxHeight;
   }
 
   @override
   Size computeDryLayout(BoxConstraints constraints) {
-    final childSize = _calculateChildSize(constraints);
-    return _computeOverallSizeFromChildSize(childSize);
+    return constraints.constrain(Size(constraints.maxWidth, _calculateChildHeight(constraints)));
   }
 
   @override
   void performLayout() {
     final constraints = this.constraints;
-    final childSize = _calculateChildSize(constraints);
 
     final childConstraints = BoxConstraints.tightFor(
-      width: childSize.width,
-      height: childSize.height,
+      height: _calculateChildHeight(constraints),
     );
 
     var child = firstChild;
+    var currentWidth = 0.0;
     while (child != null) {
       child.layout(childConstraints, parentUsesSize: true);
+
+      currentWidth += child.size.width;
+
       child = childAfter(child);
     }
 
@@ -707,7 +704,7 @@ class _RenderSegmentedControl<T> extends RenderBox
         break;
     }
 
-    size = _computeOverallSizeFromChildSize(childSize);
+    size = constraints.constrain(Size(currentWidth, _calculateChildHeight(constraints)));
   }
 
   @override
