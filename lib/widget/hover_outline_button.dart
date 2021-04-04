@@ -19,6 +19,7 @@ class HoverOutlineButton extends StatelessWidget {
       horizontal: 12,
     ),
     this.alignment = Alignment.center,
+    this.borderRadius = primaryBorderRadius,
     bool primary = false,
     this.onPressed,
   })  : assert(child != null),
@@ -40,6 +41,7 @@ class HoverOutlineButton extends StatelessWidget {
     this.color,
     this.hoverColor = colorBgTertiary,
     this.borderSide = btnBorderSide,
+    this.borderRadius = primaryBorderRadius,
     this.onPressed,
   })  : assert(child != null),
         super(key: key);
@@ -68,12 +70,18 @@ class HoverOutlineButton extends StatelessWidget {
   /// 边框
   final BorderSide borderSide;
 
+  /// The radius of the button's corners when it has a background color.
+  ///
+  /// Defaults to round corners of 6 logical pixels.
+  final BorderRadius borderRadius;
+
   @override
   Widget build(BuildContext context) {
     return HoverRegion(
+      cursor: SystemMouseCursors.click,
       builder: (context, child, hover) {
         final decoration = BoxDecoration(
-          borderRadius: primaryBorderRadius,
+          borderRadius: borderRadius,
           border: Border.fromBorderSide(borderSide),
           color: hover ? hoverColor : color,
         );
@@ -84,7 +92,7 @@ class HoverOutlineButton extends StatelessWidget {
             alignment: alignment,
             padding: padding,
             minSize: minSize,
-            borderRadius: primaryBorderRadius,
+            borderRadius: borderRadius,
             color: decoration.color,
             onPressed: onPressed,
             child: child,

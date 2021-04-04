@@ -12,7 +12,6 @@ import 'package:fluttericon/octicons_icons.dart';
 import 'package:github_desktop/widget/hover_button.dart';
 
 const _actionTextStyle = TextStyle(
-  color: colorHeaderLogo,
   fontWeight: FontWeight.w600,
   fontSize: 14,
 );
@@ -42,7 +41,8 @@ class GithubActionBar extends StatelessWidget implements ObstructingPreferredSiz
         vertical: 16,
         horizontal: 32,
       ),
-      child: Row(
+      child: WidgetGroup.spacing(
+        spacing: 16,
         children: [
           HoverButton(
             minSize: 0,
@@ -59,16 +59,12 @@ class GithubActionBar extends StatelessWidget implements ObstructingPreferredSiz
               color: colorHeaderLogo,
             ),
           ),
-          const SizedBox(
-            width: 16,
-          ),
           ActionBarSearch(),
-          const SizedBox(
-            width: 16,
-          ),
           HoverButton(
             padding: EdgeInsets.zero,
-            minSize: 0,
+            minSize: 30,
+            foregroundColor: colorHeaderLogo,
+            hoverForegroundColor: colorTextTertiary,
             onPressed: () {
               Navigator.pushNamedAndRemoveUntil(
                 context,
@@ -81,12 +77,11 @@ class GithubActionBar extends StatelessWidget implements ObstructingPreferredSiz
               style: _actionTextStyle,
             ),
           ),
-          const SizedBox(
-            width: 16,
-          ),
           HoverButton(
             padding: EdgeInsets.zero,
-            minSize: 0,
+            minSize: 30,
+            foregroundColor: colorHeaderLogo,
+            hoverForegroundColor: colorTextTertiary,
             onPressed: () {
               Navigator.pushNamedAndRemoveUntil(
                 context,
@@ -99,12 +94,11 @@ class GithubActionBar extends StatelessWidget implements ObstructingPreferredSiz
               style: _actionTextStyle,
             ),
           ),
-          const SizedBox(
-            width: 16,
-          ),
           HoverButton(
             padding: EdgeInsets.zero,
-            minSize: 0,
+            minSize: 30,
+            foregroundColor: colorHeaderLogo,
+            hoverForegroundColor: colorTextTertiary,
             onPressed: () {
               Navigator.pushNamedAndRemoveUntil(
                 context,
@@ -117,12 +111,11 @@ class GithubActionBar extends StatelessWidget implements ObstructingPreferredSiz
               style: _actionTextStyle,
             ),
           ),
-          const SizedBox(
-            width: 16,
-          ),
           HoverButton(
             padding: EdgeInsets.zero,
-            minSize: 0,
+            minSize: 30,
+            foregroundColor: colorHeaderLogo,
+            hoverForegroundColor: colorTextTertiary,
             onPressed: () {
               Navigator.pushNamedAndRemoveUntil(
                 context,
@@ -137,25 +130,22 @@ class GithubActionBar extends StatelessWidget implements ObstructingPreferredSiz
           ),
           const Spacer(),
           HoverButton(
-            minSize: 0,
+            minSize: 30,
             padding: EdgeInsets.zero,
+            foregroundColor: colorHeaderLogo,
+            hoverForegroundColor: colorTextTertiary,
             onPressed: () {},
             child: const IconLabel(
               horizontalSpacing: 4,
               label: Icon(
                 Octicons.plus,
                 size: 14,
-                color: colorHeaderLogo,
               ),
               rightIcon: Icon(
                 Octicons.triangle_down,
                 size: 10,
-                color: colorHeaderLogo,
               ),
             ),
-          ),
-          const SizedBox(
-            width: 16,
           ),
           ActionBarUser(),
         ],

@@ -11,6 +11,7 @@ import 'package:github_desktop/util/html_utils.dart';
 import 'package:github_desktop/widget/divider.dart';
 import 'package:github_desktop/widget/github_user.dart';
 import 'package:github_desktop/widget/hover_button.dart';
+import 'package:github_desktop/widget/hover_outline_button.dart';
 import 'package:github_desktop/widget/support_dropdown_menu.dart';
 import 'package:fluttericon/octicons_icons.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +26,8 @@ class ActionBarUser extends StatelessWidget {
     return HoverButton(
       minSize: 0,
       padding: EdgeInsets.zero,
+      foregroundColor: colorHeaderLogo,
+      hoverForegroundColor: colorTextTertiary,
       onPressed: () {
         showDropdownMenu<void>(
           context: context,
@@ -56,21 +59,19 @@ class ActionBarUser extends StatelessWidget {
             const CupertinoDivider(),
             Container(
               constraints: const BoxConstraints(minWidth: 146),
-              decoration: primaryBorderDecoration,
               margin: const EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 8,
               ),
-              child: HoverButton(
-                hoverStyle: HoverStyle.plain,
+              child: HoverOutlineButton(
                 onPressed: () {},
-                borderRadius: primaryBorderRadius,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 8,
                   vertical: 4,
                 ),
                 minSize: 0,
                 alignment: Alignment.centerLeft,
+                borderRadius: primaryBorderRadius,
                 child: IconLabel(
                   label: Text(
                     viewer?.status?.message ?? 'Unknown',
@@ -153,7 +154,6 @@ class ActionBarUser extends StatelessWidget {
         rightIcon: Icon(
           Octicons.triangle_down,
           size: 10,
-          color: colorHeaderLogo,
         ),
       ),
     );

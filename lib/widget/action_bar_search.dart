@@ -60,6 +60,7 @@ class _ActionBarSearchState extends State<ActionBarSearch> {
         width: _ixExpanded ? _expandedWidth : _collapsedWidth,
         duration: const Duration(milliseconds: 300),
         decoration: headerInputBorderDecoration,
+        curve: Curves.ease,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -108,7 +109,10 @@ class _SearchPopupWindow extends StatelessWidget {
   Widget build(BuildContext context) {
     final animation = ModalRoute.of(context)?.animation;
     return AnimatedBuilder(
-      animation: animation,
+      animation: CurvedAnimation(
+        parent: animation,
+        curve: Curves.ease,
+      ),
       builder: (context, child) {
         return Container(
           constraints: BoxConstraints(

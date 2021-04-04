@@ -31,12 +31,13 @@ class HoverButton extends StatelessWidget {
     Key key,
     @required this.child,
     this.color,
+    this.hoverColor = _hoverColor,
     this.alignment = Alignment.center,
     this.padding = EdgeInsets.zero,
     this.hoverStyle = HoverStyle.none,
     this.minSize = 0,
     this.foregroundColor,
-    this.hoverColor = _hoverColor,
+    this.hoverForegroundColor,
     this.borderRadius = const BorderRadius.all(Radius.circular(6)),
     this.cursor = SystemMouseCursors.click,
     this.onPressed,
@@ -56,6 +57,9 @@ class HoverButton extends StatelessWidget {
   /// Defaults to the [CupertinoTheme]'s `primaryColor` when the
   /// [CupertinoButton.filled] constructor is used.
   final Color color;
+
+  /// 鼠标悬浮颜色
+  final Color hoverColor;
 
   /// The alignment of the button's [child].
   ///
@@ -78,8 +82,8 @@ class HoverButton extends StatelessWidget {
   /// 字体、图标颜色
   final Color foregroundColor;
 
-  /// 鼠标悬浮颜色
-  final Color hoverColor;
+  /// 鼠标悬浮字体颜色
+  final Color hoverForegroundColor;
 
   /// Minimum size of the button.
   ///
@@ -125,7 +129,7 @@ class HoverButton extends StatelessWidget {
         switch (hoverStyle) {
           case HoverStyle.none:
             textStyle = textStyle.copyWith(
-              color: tinting ? textColor : textStyle.color,
+              color: tinting ? hoverForegroundColor ?? textColor : textStyle.color,
               fontWeight: FontWeight.normal,
             );
             break;
