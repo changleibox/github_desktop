@@ -10,6 +10,7 @@ import 'package:github_desktop/system/route.dart';
 import 'package:github_desktop/util/html_utils.dart';
 import 'package:github_desktop/widget/divider.dart';
 import 'package:github_desktop/widget/github_user.dart';
+import 'package:github_desktop/widget/hover_button.dart';
 import 'package:github_desktop/widget/support_dropdown_menu.dart';
 import 'package:fluttericon/octicons_icons.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +22,7 @@ class ActionBarUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewer = context.read<UserModel>().viewer;
-    return CupertinoButton(
+    return HoverButton(
       minSize: 0,
       padding: EdgeInsets.zero,
       onPressed: () {
@@ -60,7 +61,8 @@ class ActionBarUser extends StatelessWidget {
                 horizontal: 16,
                 vertical: 8,
               ),
-              child: CupertinoButton(
+              child: HoverButton(
+                hoverStyle: HoverStyle.plain,
                 onPressed: () {},
                 borderRadius: primaryBorderRadius,
                 padding: const EdgeInsets.symmetric(
@@ -143,20 +145,16 @@ class ActionBarUser extends StatelessWidget {
           ],
         );
       },
-      child: Row(
-        children: const [
-          GithubUser(
-            size: 20,
-          ),
-          SizedBox(
-            width: 4,
-          ),
-          Icon(
-            Octicons.triangle_down,
-            size: 10,
-            color: colorHeaderLogo,
-          ),
-        ],
+      child: const IconLabel(
+        horizontalSpacing: 4,
+        label: GithubUser(
+          size: 20,
+        ),
+        rightIcon: Icon(
+          Octicons.triangle_down,
+          size: 10,
+          color: colorHeaderLogo,
+        ),
       ),
     );
   }

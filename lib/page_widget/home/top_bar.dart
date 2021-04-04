@@ -4,11 +4,11 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttericon/octicons_icons.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/model/user_model.dart';
 import 'package:github_desktop/widget/counter.dart';
 import 'package:github_desktop/widget/github_user.dart';
-import 'package:fluttericon/octicons_icons.dart';
 import 'package:provider/provider.dart';
 
 /// Created by changlei on 3/8/21.
@@ -70,6 +70,7 @@ class TopBar extends StatelessWidget {
               height: 1.05,
             ),
             isScrollable: true,
+            overlayColor: MaterialStateProperty.all(Colors.transparent),
             tabs: <Tab>[
               _buildTab(
                 context,

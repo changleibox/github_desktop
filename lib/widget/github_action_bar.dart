@@ -2,12 +2,14 @@
  * Copyright (c) 2021 CHANGLEI. All rights reserved.
  */
 
+import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/system/route.dart';
 import 'package:github_desktop/widget/action_bar_search.dart';
 import 'package:github_desktop/widget/action_bar_user.dart';
 import 'package:fluttericon/octicons_icons.dart';
+import 'package:github_desktop/widget/hover_button.dart';
 
 const _actionTextStyle = TextStyle(
   color: colorHeaderLogo,
@@ -42,7 +44,7 @@ class GithubActionBar extends StatelessWidget implements ObstructingPreferredSiz
       ),
       child: Row(
         children: [
-          CupertinoButton(
+          HoverButton(
             minSize: 0,
             padding: EdgeInsets.zero,
             onPressed: () {
@@ -64,7 +66,7 @@ class GithubActionBar extends StatelessWidget implements ObstructingPreferredSiz
           const SizedBox(
             width: 16,
           ),
-          CupertinoButton(
+          HoverButton(
             padding: EdgeInsets.zero,
             minSize: 0,
             onPressed: () {
@@ -82,7 +84,7 @@ class GithubActionBar extends StatelessWidget implements ObstructingPreferredSiz
           const SizedBox(
             width: 16,
           ),
-          CupertinoButton(
+          HoverButton(
             padding: EdgeInsets.zero,
             minSize: 0,
             onPressed: () {
@@ -100,7 +102,7 @@ class GithubActionBar extends StatelessWidget implements ObstructingPreferredSiz
           const SizedBox(
             width: 16,
           ),
-          CupertinoButton(
+          HoverButton(
             padding: EdgeInsets.zero,
             minSize: 0,
             onPressed: () {
@@ -118,7 +120,7 @@ class GithubActionBar extends StatelessWidget implements ObstructingPreferredSiz
           const SizedBox(
             width: 16,
           ),
-          CupertinoButton(
+          HoverButton(
             padding: EdgeInsets.zero,
             minSize: 0,
             onPressed: () {
@@ -134,26 +136,22 @@ class GithubActionBar extends StatelessWidget implements ObstructingPreferredSiz
             ),
           ),
           const Spacer(),
-          CupertinoButton(
+          HoverButton(
             minSize: 0,
             padding: EdgeInsets.zero,
             onPressed: () {},
-            child: Row(
-              children: const [
-                Icon(
-                  Octicons.plus,
-                  size: 14,
-                  color: colorHeaderLogo,
-                ),
-                SizedBox(
-                  width: 4,
-                ),
-                Icon(
-                  Octicons.triangle_down,
-                  size: 10,
-                  color: colorHeaderLogo,
-                ),
-              ],
+            child: const IconLabel(
+              horizontalSpacing: 4,
+              label: Icon(
+                Octicons.plus,
+                size: 14,
+                color: colorHeaderLogo,
+              ),
+              rightIcon: Icon(
+                Octicons.triangle_down,
+                size: 10,
+                color: colorHeaderLogo,
+              ),
             ),
           ),
           const SizedBox(
@@ -172,8 +170,7 @@ class GithubActionBar extends StatelessWidget implements ObstructingPreferredSiz
 
   @override
   bool shouldFullyObstruct(BuildContext context) {
-    final backgroundColor = CupertinoDynamicColor.maybeResolve(this.backgroundColor, context) ??
-        CupertinoTheme.of(context).barBackgroundColor;
+    final backgroundColor = CupertinoDynamicColor.maybeResolve(this.backgroundColor, context) ?? CupertinoTheme.of(context).barBackgroundColor;
     return backgroundColor.alpha == 0xFF;
   }
 }

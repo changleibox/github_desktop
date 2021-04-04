@@ -38,10 +38,12 @@ class HoverButton extends StatelessWidget {
     this.foregroundColor,
     this.hoverColor = _hoverColor,
     this.borderRadius = const BorderRadius.all(Radius.circular(6)),
+    this.cursor = SystemMouseCursors.click,
     this.onPressed,
   })  : assert(child != null),
         assert(alignment != null),
         assert(hoverStyle != null),
+        assert(cursor != null),
         super(key: key);
 
   /// child
@@ -93,6 +95,16 @@ class HoverButton extends StatelessWidget {
   /// 点击事件
   final VoidCallback onPressed;
 
+  /// The mouse cursor for mouse pointers that are hovering over the region.
+  ///
+  /// When a mouse enters the region, its cursor will be changed to the [cursor].
+  /// When the mouse leaves the region, the cursor will be decided by the region
+  /// found at the new location.
+  ///
+  /// The [cursor] defaults to [MouseCursor.defer], deferring the choice of
+  /// cursor to the next region behind it in hit-test order.
+  final MouseCursor cursor;
+
   /// Whether the button is enabled or disabled. Buttons are disabled by default. To
   /// enable a button, set its [onPressed] property to a non-null value.
   bool get enabled => onPressed != null;
@@ -102,7 +114,7 @@ class HoverButton extends StatelessWidget {
     final themeData = CupertinoTheme.of(context);
     final textColor = themeData.primaryColor;
     return HoverRegion(
-      cursor: SystemMouseCursors.click,
+      cursor: cursor,
       builder: (context, child, hover) {
         var textStyle = TextStyle(
           fontSize: 14,
