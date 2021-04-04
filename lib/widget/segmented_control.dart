@@ -8,7 +8,6 @@ import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:github_desktop/common/resources.dart';
 
 // Minimum padding from edges of the segmented control to edges of
 // encompassing widget.
@@ -90,6 +89,7 @@ class SegmentedControl<T extends Object> extends StatefulWidget {
     this.unselectedColor,
     this.selectedColor,
     this.borderColor,
+    this.selectedBorderColor,
     this.pressedColor,
     this.padding,
   })  : assert(children != null),
@@ -178,6 +178,11 @@ class SegmentedControl<T extends Object> extends StatefulWidget {
   /// Defaults to [CupertinoTheme]'s `primaryColor` if null.
   final Color borderColor;
 
+  /// The color used as the border around each widget.
+  ///
+  /// Defaults to [CupertinoTheme]'s `primaryColor` if null.
+  final Color selectedBorderColor;
+
   /// The color used to fill the background of the widget the user is
   /// temporarily interacting with through a long press or drag.
   ///
@@ -206,6 +211,7 @@ class _SegmentedControlState<T extends Object> extends State<SegmentedControl<T>
   Color _selectedColor;
   Color _unselectedColor;
   Color _borderColor;
+  Color _selectedBorderColor;
   Color _pressedColor;
 
   AnimationController createAnimationController() {
@@ -236,6 +242,11 @@ class _SegmentedControlState<T extends Object> extends State<SegmentedControl<T>
     if (_borderColor != borderColor) {
       changed = true;
       _borderColor = borderColor;
+    }
+    final selectedBorderColor = widget.selectedBorderColor ?? CupertinoTheme.of(context).primaryColor;
+    if (_selectedBorderColor != selectedBorderColor) {
+      changed = true;
+      _selectedBorderColor = selectedBorderColor;
     }
     final pressedColor = widget.pressedColor ?? CupertinoTheme.of(context).primaryColor.withOpacity(0.2);
     if (_pressedColor != pressedColor) {
@@ -430,6 +441,7 @@ class _SegmentedControlState<T extends Object> extends State<SegmentedControl<T>
       pressedIndex: pressedIndex,
       backgroundColors: _backgroundColors,
       borderColor: _borderColor,
+      selectedBorderColor: _selectedBorderColor,
       children: _gestureChildren,
     );
 
@@ -451,6 +463,7 @@ class _SegmentedControlRenderWidget<T> extends MultiChildRenderObjectWidget {
     @required this.pressedIndex,
     @required this.backgroundColors,
     @required this.borderColor,
+    @required this.selectedBorderColor,
   }) : super(
           key: key,
           children: children,
@@ -460,6 +473,7 @@ class _SegmentedControlRenderWidget<T> extends MultiChildRenderObjectWidget {
   final int pressedIndex;
   final List<Color> backgroundColors;
   final Color borderColor;
+  final Color selectedBorderColor;
 
   @override
   RenderObject createRenderObject(BuildContext context) {
@@ -469,6 +483,7 @@ class _SegmentedControlRenderWidget<T> extends MultiChildRenderObjectWidget {
       pressedIndex: pressedIndex,
       backgroundColors: backgroundColors,
       borderColor: borderColor,
+      selectedBorderColor: selectedBorderColor,
     );
   }
 
@@ -479,7 +494,8 @@ class _SegmentedControlRenderWidget<T> extends MultiChildRenderObjectWidget {
       ..selectedIndex = selectedIndex
       ..pressedIndex = pressedIndex
       ..backgroundColors = backgroundColors
-      ..borderColor = borderColor;
+      ..borderColor = borderColor
+      ..selectedBorderColor = selectedBorderColor;
   }
 }
 
@@ -499,12 +515,14 @@ class _RenderSegmentedControl<T> extends RenderBox
     @required TextDirection textDirection,
     @required List<Color> backgroundColors,
     @required Color borderColor,
+    @required Color selectedBorderColor,
   })  : assert(textDirection != null),
         _textDirection = textDirection,
         _selectedIndex = selectedIndex,
         _pressedIndex = pressedIndex,
         _backgroundColors = backgroundColors,
-        _borderColor = borderColor;
+        _borderColor = borderColor,
+        _selectedBorderColor = selectedBorderColor;
 
   int get selectedIndex => _selectedIndex;
   int _selectedIndex;
@@ -558,6 +576,17 @@ class _RenderSegmentedControl<T> extends RenderBox
       return;
     }
     _borderColor = value;
+    markNeedsPaint();
+  }
+
+  Color get selectedBorderColor => _selectedBorderColor;
+  Color _selectedBorderColor;
+
+  set selectedBorderColor(Color value) {
+    if (_selectedBorderColor == value) {
+      return;
+    }
+    _selectedBorderColor = value;
     markNeedsPaint();
   }
 
@@ -736,10 +765,11 @@ class _RenderSegmentedControl<T> extends RenderBox
         ..color = backgroundColors[childIndex]
         ..style = PaintingStyle.fill,
     );
+    final selected = selectedIndex == childIndex;
     context.canvas.drawRRect(
       childParentData.surroundingRect.shift(offset),
       Paint()
-        ..color = selectedIndex == childIndex ? primaryColor : borderColor
+        ..color = selected ? selectedBorderColor : borderColor
         ..strokeWidth = 1.0
         ..style = PaintingStyle.stroke,
     );
