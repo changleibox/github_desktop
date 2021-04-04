@@ -8,6 +8,7 @@ import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:github_desktop/common/resources.dart';
 
 // Minimum padding from edges of the segmented control to edges of
 // encompassing widget.
@@ -711,11 +712,17 @@ class _RenderSegmentedControl<T> extends RenderBox
   void paint(PaintingContext context, Offset offset) {
     var child = firstChild;
     var index = 0;
+    RenderBox selectedChild;
     while (child != null) {
-      _paintChild(context, offset, child, index);
+      if (index == selectedIndex) {
+        selectedChild = child;
+      } else {
+        _paintChild(context, offset, child, index);
+      }
       child = childAfter(child);
       index += 1;
     }
+    _paintChild(context, offset, selectedChild, selectedIndex);
   }
 
   void _paintChild(PaintingContext context, Offset offset, RenderBox child, int childIndex) {
@@ -732,7 +739,7 @@ class _RenderSegmentedControl<T> extends RenderBox
     context.canvas.drawRRect(
       childParentData.surroundingRect.shift(offset),
       Paint()
-        ..color = borderColor
+        ..color = selectedIndex == childIndex ? primaryColor : borderColor
         ..strokeWidth = 1.0
         ..style = PaintingStyle.stroke,
     );
