@@ -21,7 +21,7 @@ const double _kMinSegmentedControlHeight = 28.0;
 const Duration _kFadeDuration = Duration(milliseconds: 165);
 
 // 圆角
-const Radius _radius = Radius.circular(6.0);
+const Radius _kRadius = Radius.circular(6.0);
 
 /// An iOS-style segmented control.
 ///
@@ -92,9 +92,11 @@ class SegmentedControl<T extends Object> extends StatefulWidget {
     this.selectedBorderColor,
     this.pressedColor,
     this.padding,
+    this.radius = const BorderRadius.all(_kRadius),
   })  : assert(children != null),
         assert(children.length >= 2),
         assert(onValueChanged != null),
+        assert(radius != null),
         assert(
           groupValue == null || children.keys.any((T child) => child == groupValue),
           'The groupValue must be either null or one of the keys in the children map.',
@@ -193,6 +195,9 @@ class SegmentedControl<T extends Object> extends StatefulWidget {
   ///
   /// Defaults to EdgeInsets.symmetric(horizontal: 16.0)
   final EdgeInsetsGeometry padding;
+
+  /// radius
+  final BorderRadius radius;
 
   @override
   _SegmentedControlState<T> createState() => _SegmentedControlState<T>();
@@ -442,6 +447,7 @@ class _SegmentedControlState<T extends Object> extends State<SegmentedControl<T>
       backgroundColors: _backgroundColors,
       borderColor: _borderColor,
       selectedBorderColor: _selectedBorderColor,
+      radius: widget.radius,
       children: _gestureChildren,
     );
 
@@ -464,6 +470,7 @@ class _SegmentedControlRenderWidget<T> extends MultiChildRenderObjectWidget {
     @required this.backgroundColors,
     @required this.borderColor,
     @required this.selectedBorderColor,
+    @required this.radius,
   }) : super(
           key: key,
           children: children,
@@ -474,6 +481,7 @@ class _SegmentedControlRenderWidget<T> extends MultiChildRenderObjectWidget {
   final List<Color> backgroundColors;
   final Color borderColor;
   final Color selectedBorderColor;
+  final BorderRadius radius;
 
   @override
   RenderObject createRenderObject(BuildContext context) {
@@ -484,6 +492,7 @@ class _SegmentedControlRenderWidget<T> extends MultiChildRenderObjectWidget {
       backgroundColors: backgroundColors,
       borderColor: borderColor,
       selectedBorderColor: selectedBorderColor,
+      radius: radius,
     );
   }
 
@@ -495,7 +504,8 @@ class _SegmentedControlRenderWidget<T> extends MultiChildRenderObjectWidget {
       ..pressedIndex = pressedIndex
       ..backgroundColors = backgroundColors
       ..borderColor = borderColor
-      ..selectedBorderColor = selectedBorderColor;
+      ..selectedBorderColor = selectedBorderColor
+      ..radius = radius;
   }
 }
 
@@ -516,13 +526,15 @@ class _RenderSegmentedControl<T> extends RenderBox
     @required List<Color> backgroundColors,
     @required Color borderColor,
     @required Color selectedBorderColor,
+    @required BorderRadius radius,
   })  : assert(textDirection != null),
         _textDirection = textDirection,
         _selectedIndex = selectedIndex,
         _pressedIndex = pressedIndex,
         _backgroundColors = backgroundColors,
         _borderColor = borderColor,
-        _selectedBorderColor = selectedBorderColor;
+        _selectedBorderColor = selectedBorderColor,
+        _radius = radius;
 
   int get selectedIndex => _selectedIndex;
   int _selectedIndex;
@@ -587,6 +599,17 @@ class _RenderSegmentedControl<T> extends RenderBox
       return;
     }
     _selectedBorderColor = value;
+    markNeedsPaint();
+  }
+
+  BorderRadius get radius => _radius;
+  BorderRadius _radius;
+
+  set radius(BorderRadius value) {
+    if (_radius == value) {
+      return;
+    }
+    _radius = value;
     markNeedsPaint();
   }
 
@@ -664,9 +687,9 @@ class _RenderSegmentedControl<T> extends RenderBox
       final childRect = Rect.fromLTWH(start, 0.0, child.size.width, child.size.height);
       RRect rChildRect;
       if (child == leftChild) {
-        rChildRect = RRect.fromRectAndCorners(childRect, topLeft: _radius, bottomLeft: _radius);
+        rChildRect = RRect.fromRectAndCorners(childRect, topLeft: radius.topLeft, bottomLeft: radius.bottomLeft);
       } else if (child == rightChild) {
-        rChildRect = RRect.fromRectAndCorners(childRect, topRight: _radius, bottomRight: _radius);
+        rChildRect = RRect.fromRectAndCorners(childRect, topRight: radius.topRight, bottomRight: radius.bottomRight);
       } else {
         rChildRect = RRect.fromRectAndCorners(childRect);
       }
