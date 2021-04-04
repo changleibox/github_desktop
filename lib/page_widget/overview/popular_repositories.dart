@@ -13,6 +13,7 @@ import 'package:github_desktop/github_gql/github_queries.req.gql.dart';
 import 'package:github_desktop/model/user_model.dart';
 import 'package:github_desktop/system/exceptions.dart';
 import 'package:github_desktop/util/date_format_utils.dart';
+import 'package:github_desktop/util/launch_utils.dart';
 import 'package:github_desktop/widget/future_wrapper_view.dart';
 import 'package:github_desktop/widget/grid_layout.dart';
 import 'package:github_desktop/widget/hover_button.dart';
@@ -147,7 +148,9 @@ class _RepositoryItem extends StatelessWidget {
         direction: Axis.vertical,
         children: [
           HoverButton(
-            onPressed: () {},
+            onPressed: () {
+              return LaunchUtils.launchUrl(context, item.url.value);
+            },
             hoverStyle: HoverStyle.solid,
             child: Text(
               item.name,
