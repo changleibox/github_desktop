@@ -107,6 +107,9 @@ const colorTimelineBadgeBg = Color(0xffe1e4e8);
 /// footer图标颜色
 const colorFooterInvertocatOcticon = Color(0xffd1d5da);
 
+/// 底部指示器颜色
+const colorUnderlineText = Color(0xff24292e);
+
 /// 默认边框
 const borderSide = BorderSide(
   color: colorBorderSecondary,
