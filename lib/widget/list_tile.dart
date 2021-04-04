@@ -61,7 +61,7 @@ class CupertinoListTile extends StatelessWidget {
                   HoverButton(
                     onPressed: onPressed,
                     hoverStyle: HoverStyle.solid,
-                    foregroundColor: CupertinoColors.systemBlue,
+                    // foregroundColor: CupertinoColors.systemBlue,
                     child: Builder(
                       builder: (context) {
                         final textStyle = DefaultTextStyle.of(context).style;
