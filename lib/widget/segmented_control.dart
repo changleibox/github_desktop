@@ -96,7 +96,6 @@ class SegmentedControl<T extends Object> extends StatefulWidget {
   })  : assert(children != null),
         assert(children.length >= 2),
         assert(onValueChanged != null),
-        assert(radius != null),
         assert(
           groupValue == null || children.keys.any((T child) => child == groupValue),
           'The groupValue must be either null or one of the keys in the children map.',
@@ -447,7 +446,7 @@ class _SegmentedControlState<T extends Object> extends State<SegmentedControl<T>
       backgroundColors: _backgroundColors,
       borderColor: _borderColor,
       selectedBorderColor: _selectedBorderColor,
-      radius: widget.radius,
+      radius: widget.radius ?? BorderRadius.zero,
       children: _gestureChildren,
     );
 
