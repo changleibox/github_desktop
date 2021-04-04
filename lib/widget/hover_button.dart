@@ -102,6 +102,7 @@ class HoverButton extends StatelessWidget {
     final themeData = CupertinoTheme.of(context);
     final textColor = themeData.primaryColor;
     return HoverRegion(
+      cursor: SystemMouseCursors.click,
       builder: (context, child, hover) {
         var textStyle = TextStyle(
           fontSize: 14,

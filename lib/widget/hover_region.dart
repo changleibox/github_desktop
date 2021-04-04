@@ -15,8 +15,10 @@ class HoverRegion extends StatefulWidget {
   const HoverRegion({
     Key key,
     @required this.builder,
+    this.cursor = MouseCursor.defer,
     this.child,
   })  : assert(builder != null),
+        assert(cursor != null),
         super(key: key);
 
   /// 构建child
@@ -24,6 +26,16 @@ class HoverRegion extends StatefulWidget {
 
   /// child
   final Widget child;
+
+  /// The mouse cursor for mouse pointers that are hovering over the region.
+  ///
+  /// When a mouse enters the region, its cursor will be changed to the [cursor].
+  /// When the mouse leaves the region, the cursor will be decided by the region
+  /// found at the new location.
+  ///
+  /// The [cursor] defaults to [MouseCursor.defer], deferring the choice of
+  /// cursor to the next region behind it in hit-test order.
+  final MouseCursor cursor;
 
   @override
   _HoverRegionState createState() => _HoverRegionState();
@@ -35,7 +47,7 @@ class _HoverRegionState extends State<HoverRegion> {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-      cursor: SystemMouseCursors.click,
+      cursor: widget.cursor,
       onEnter: (event) {
         setState(() {
           _hovered = true;

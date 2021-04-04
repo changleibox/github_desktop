@@ -2,8 +2,10 @@
  * Copyright (c) 2021 CHANGLEI. All rights reserved.
  */
 
+import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:github_desktop/common/resources.dart';
+import 'package:github_desktop/widget/segmented_control.dart';
 
 /// Created by changlei on 3/8/21.
 ///
@@ -44,9 +46,10 @@ class _AssignedBarState extends State<AssignedBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return WidgetGroup.spacing(
+      spacing: 15,
       children: [
-        CupertinoSegmentedControl<String>(
+        SegmentedControl<String>(
           onValueChanged: (value) {
             setState(() {
               _groupValue = value;
@@ -60,9 +63,6 @@ class _AssignedBarState extends State<AssignedBar> {
           children: widget.items.map((key, value) {
             return MapEntry(key, _buildSegmentItem(key, value));
           }),
-        ),
-        const SizedBox(
-          width: 15,
         ),
         Expanded(
           child: CupertinoSearchTextField(
@@ -95,7 +95,7 @@ class _AssignedBarState extends State<AssignedBar> {
     );
   }
 
-  Padding _buildSegmentItem(String key, String text) {
+  Widget _buildSegmentItem(String key, String text) {
     final textColor = CupertinoTheme.of(context).textTheme.textStyle.color;
     return Padding(
       padding: const EdgeInsets.symmetric(
