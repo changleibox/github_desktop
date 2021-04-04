@@ -79,12 +79,7 @@ class _PullRequestsPageState extends State<PullRequestsPage> {
     if (response.errors != null && response.errors.isNotEmpty) {
       throw QueryException(response.errors);
     }
-    return $AssignedPullRequests(response.data)
-        .search
-        .edges
-        .map((e) => e.node)
-        .whereType<$AssignedPullRequests$search$edges$node$asPullRequest>()
-        .toList();
+    return $AssignedPullRequests(response.data).search.edges.map((e) => e.node).whereType<$AssignedPullRequests$search$edges$node$asPullRequest>().toList();
   }
 
   Future<int> _retrievePullRequestsCount(String query) async {
@@ -97,12 +92,7 @@ class _PullRequestsPageState extends State<PullRequestsPage> {
     if (response.errors != null) {
       return 0;
     }
-    return $AssignedPullRequests(response.data)
-        .search
-        .edges
-        .map((e) => e.node)
-        .whereType<$AssignedPullRequests$search$edges$node$asPullRequest>()
-        .length;
+    return $AssignedPullRequests(response.data).search.edges.map((e) => e.node).whereType<$AssignedPullRequests$search$edges$node$asPullRequest>().length;
   }
 
   @override
@@ -185,10 +175,7 @@ class _PullRequestsPageState extends State<PullRequestsPage> {
                             return PullRequestsTile(item: item);
                           },
                           separatorBuilder: (context, index) {
-                            return const CupertinoDivider(
-                              indent: 15,
-                              endIndent: 15,
-                            );
+                            return const CupertinoDivider();
                           },
                         ),
                       ),

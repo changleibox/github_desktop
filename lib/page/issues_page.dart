@@ -145,6 +145,7 @@ class _IssuesPageState extends State<IssuesPage> {
               Expanded(
                 child: Container(
                   decoration: primaryBorderDecoration,
+                  clipBehavior: Clip.antiAlias,
                   child: WidgetGroup(
                     direction: Axis.vertical,
                     divider: const CupertinoDivider(),
@@ -167,10 +168,7 @@ class _IssuesPageState extends State<IssuesPage> {
                             return IssuesTile(item: item);
                           },
                           separatorBuilder: (context, index) {
-                            return const CupertinoDivider(
-                              indent: 15,
-                              endIndent: 15,
-                            );
+                            return const CupertinoDivider();
                           },
                         ),
                       ),

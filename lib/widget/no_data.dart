@@ -5,6 +5,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/octicons_icons.dart';
+import 'package:github_desktop/widget/hover_button.dart';
 
 /// Created by box on 3/6/21.
 ///
@@ -45,7 +46,8 @@ class NoData extends StatelessWidget {
                   text: 'You could search ',
                 ),
                 WidgetSpan(
-                  child: CupertinoButton(
+                  child: HoverButton(
+                    hoverStyle: HoverStyle.solid,
                     minSize: 0,
                     padding: EdgeInsets.zero,
                     onPressed: () {},
@@ -61,7 +63,8 @@ class NoData extends StatelessWidget {
                   text: ' or try an ',
                 ),
                 WidgetSpan(
-                  child: CupertinoButton(
+                  child: HoverButton(
+                    hoverStyle: HoverStyle.solid,
                     minSize: 0,
                     padding: EdgeInsets.zero,
                     onPressed: () {},

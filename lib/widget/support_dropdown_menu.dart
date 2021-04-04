@@ -6,6 +6,7 @@ import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/widget/divider.dart';
+import 'package:github_desktop/widget/hover_region.dart';
 
 const _constraints = BoxConstraints(
   minWidth: 150,
@@ -130,30 +131,40 @@ class DropdownAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DropDownAction(
-      icon: leading,
-      endIcon: trailing,
-      spacing: spacing,
-      label: ConstrainedBox(
-        constraints: const BoxConstraints(
-          minHeight: 21,
-        ),
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: DefaultTextStyle(
-            style: const TextStyle(
-              color: colorTextPrimary,
-              fontSize: 14,
-              height: 1.0,
+    return HoverRegion(
+      cursor: SystemMouseCursors.click,
+      builder: (context, child, hover) {
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          color: hover ? colorBgTertiary : CupertinoColors.white,
+          child: DropDownAction(
+            icon: leading,
+            endIcon: trailing,
+            spacing: spacing,
+            label: ConstrainedBox(
+              constraints: const BoxConstraints(
+                minHeight: 21,
+              ),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: DefaultTextStyle(
+                  style: const TextStyle(
+                    color: colorTextPrimary,
+                    fontSize: 14,
+                    height: 1.0,
+                  ),
+                  child: child,
+                ),
+              ),
             ),
-            child: child,
+            onPressed: onPressed,
+            padding: padding,
+            minSize: 0,
+            isAutoPop: isAutoPop,
           ),
-        ),
-      ),
-      onPressed: onPressed,
-      padding: padding,
-      minSize: 0,
-      isAutoPop: isAutoPop,
+        );
+      },
+      child: child,
     );
   }
 }

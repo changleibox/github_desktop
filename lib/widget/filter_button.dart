@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/widget/divider.dart';
 import 'package:github_desktop/widget/hover_button.dart';
+import 'package:github_desktop/widget/hover_region.dart';
 import 'package:github_desktop/widget/support_dropdown_menu.dart';
 import 'package:fluttericon/octicons_icons.dart';
 
@@ -230,26 +231,34 @@ class FilterAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 298,
-      child: DropdownAction(
-        leading: leading,
-        spacing: 8,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 7,
-        ),
-        isAutoPop: true,
-        onPressed: onPressed,
-        child: DefaultTextStyle(
-          style: const TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
-            color: colorTextPrimary,
+    return HoverRegion(
+      cursor: SystemMouseCursors.click,
+      builder: (context, child, hover) {
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          color: hover ? colorBgTertiary : CupertinoColors.white,
+          width: 298,
+          child: DropdownAction(
+            leading: leading,
+            spacing: 8,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 7,
+            ),
+            isAutoPop: true,
+            onPressed: onPressed,
+            child: DefaultTextStyle(
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+                color: colorTextPrimary,
+              ),
+              child: child,
+            ),
           ),
-          child: child,
-        ),
-      ),
+        );
+      },
+      child: child,
     );
   }
 }
