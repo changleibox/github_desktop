@@ -20,7 +20,41 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  bool isEditMode = false;
+  bool _isEditMode = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedCrossFade(
+      duration: const Duration(milliseconds: 200),
+      firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
+      secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
+      sizeCurve: Curves.fastOutSlowIn,
+      crossFadeState: _isEditMode ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+      firstChild: _EditProfileForm(
+        onComplete: () {
+          setState(() {
+            _isEditMode = false;
+          });
+        },
+      ),
+      secondChild: _UserInfo(
+        onEdit: () {
+          setState(() {
+            _isEditMode = true;
+          });
+        },
+      ),
+    );
+  }
+}
+
+class _UserInfo extends StatelessWidget {
+  const _UserInfo({
+    Key key,
+    this.onEdit,
+  }) : super(key: key);
+
+  final VoidCallback onEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -30,127 +64,108 @@ class _EditProfileState extends State<EditProfile> {
     final followersCount = viewer?.followers?.totalCount ?? 0;
     final followingCount = viewer?.following?.totalCount ?? 0;
     final starredRepositoriesCount = viewer?.starredRepositories?.totalCount ?? 0;
-    Widget child;
-    if (isEditMode) {
-      child = _EditProfileForm(
-        onComplete: () {
-          setState(() {
-            isEditMode = false;
-          });
-        },
-      );
-    } else {
-      child = WidgetGroup(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        direction: Axis.vertical,
-        children: [
-          HoverOutlineButton(
-            padding: EdgeInsets.zero,
-            minSize: 30,
-            onPressed: () {
-              setState(() {
-                isEditMode = true;
-              });
-            },
-            child: Center(
-              child: Text(
-                'Edit profile',
-                style: textStyle.copyWith(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
+    return WidgetGroup(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      direction: Axis.vertical,
+      children: [
+        HoverOutlineButton(
+          padding: EdgeInsets.zero,
+          minSize: 30,
+          onPressed: onEdit,
+          child: Center(
+            child: Text(
+              'Edit profile',
+              style: textStyle.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
-          const SizedBox(
-            height: 16,
-          ),
-          Text.rich(
-            TextSpan(
-              children: [
-                const WidgetSpan(
-                  child: Icon(
-                    Octicons.person,
-                    size: 16,
-                    color: colorTextSecondary,
-                  ),
-                ),
-                TextSpan(
-                  text: ' $followersCount ',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14,
-                  ),
-                ),
-                const TextSpan(
-                  text: 'followers',
-                ),
-                const TextSpan(
-                  text: ' · ',
-                ),
-                TextSpan(
-                  text: '$followingCount',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14,
-                  ),
-                ),
-                const TextSpan(
-                  text: ' following',
-                ),
-                const TextSpan(
-                  text: ' · ',
-                ),
-                const WidgetSpan(
-                  child: Icon(
-                    Octicons.star,
-                    size: 16,
-                    color: colorTextSecondary,
-                  ),
-                ),
-                TextSpan(
-                  text: ' $starredRepositoriesCount',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14,
-                  ),
-                ),
-              ],
-            ),
-            style: const TextStyle(
-              fontSize: 14,
-              color: colorTextSecondary,
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        Text.rich(
+          TextSpan(
             children: [
-              const Icon(
-                Octicons.location,
-                size: 16,
-                color: colorTextTertiary,
+              const WidgetSpan(
+                child: Icon(
+                  Octicons.person,
+                  size: 16,
+                  color: colorTextSecondary,
+                ),
               ),
-              const SizedBox(
-                width: 8,
+              TextSpan(
+                text: ' $followersCount ',
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                ),
               ),
-              Flexible(
-                child: Text(
-                  viewer?.location ?? 'Unknown',
-                  style: const TextStyle(
-                    fontSize: 14,
-                  ),
+              const TextSpan(
+                text: 'followers',
+              ),
+              const TextSpan(
+                text: ' · ',
+              ),
+              TextSpan(
+                text: '$followingCount',
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                ),
+              ),
+              const TextSpan(
+                text: ' following',
+              ),
+              const TextSpan(
+                text: ' · ',
+              ),
+              const WidgetSpan(
+                child: Icon(
+                  Octicons.star,
+                  size: 16,
+                  color: colorTextSecondary,
+                ),
+              ),
+              TextSpan(
+                text: ' $starredRepositoriesCount',
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
                 ),
               ),
             ],
           ),
-        ],
-      );
-    }
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 300),
-      child: child,
+          style: const TextStyle(
+            fontSize: 14,
+            color: colorTextSecondary,
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Row(
+          children: [
+            const Icon(
+              Octicons.location,
+              size: 16,
+              color: colorTextTertiary,
+            ),
+            const SizedBox(
+              width: 8,
+            ),
+            Flexible(
+              child: Text(
+                viewer?.location ?? 'Unknown',
+                style: const TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

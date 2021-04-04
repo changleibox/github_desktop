@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/widget/hover_region.dart';
 
+const _duration = Duration(milliseconds: 200);
+
 /// Created by box on 3/29/21.
 ///
 /// hover边框
@@ -75,6 +77,10 @@ class HoverOutlineButton extends StatelessWidget {
   /// Defaults to round corners of 6 logical pixels.
   final BorderRadius borderRadius;
 
+  /// Whether the button is enabled or disabled. Buttons are disabled by default. To
+  /// enable a button, set its [onPressed] property to a non-null value.
+  bool get enabled => onPressed != null;
+
   @override
   Widget build(BuildContext context) {
     return HoverRegion(
@@ -85,17 +91,35 @@ class HoverOutlineButton extends StatelessWidget {
           border: Border.fromBorderSide(borderSide),
           color: hover ? hoverColor : color,
         );
+        final themeData = CupertinoTheme.of(context);
+        final primaryColor = themeData.primaryColor;
+        final backgroundColor = decoration.color;
+
+        final foregroundColor = backgroundColor != null
+            ? themeData.primaryContrastingColor
+            : enabled
+                ? primaryColor
+                : CupertinoDynamicColor.resolve(CupertinoColors.placeholderText, context);
+
+        final textStyle = themeData.textTheme.textStyle.copyWith(color: foregroundColor);
         return AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
+          duration: _duration,
           decoration: decoration,
           child: CupertinoButton(
             alignment: alignment,
             padding: padding,
             minSize: minSize,
             borderRadius: borderRadius,
-            color: decoration.color,
+            // color: decoration.color,
             onPressed: onPressed,
-            child: child,
+            child: AnimatedDefaultTextStyle(
+              duration: _duration,
+              style: textStyle,
+              child: IconTheme(
+                data: IconThemeData(color: foregroundColor),
+                child: child,
+              ),
+            ),
           ),
         );
       },
