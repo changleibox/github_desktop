@@ -125,10 +125,7 @@ class _LastYearContributionsState extends State<LastYearContributions> {
 class _ContributionSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return CupertinoButton(
-      borderRadius: primaryBorderRadius,
-      padding: EdgeInsets.zero,
-      minSize: 30,
+    return HoverButton(
       onPressed: () async {
         final renderObject = context.findRenderObject() as RenderBox;
         final rect = Rect.fromPoints(
@@ -174,22 +171,22 @@ class _ContributionSettings extends StatelessWidget {
           ],
         );
       },
-      child: HoverButton(
-        onPressed: () {},
-        foregroundColor: colorTextSecondary,
-        child: const IconLabel(
-          horizontalSpacing: 2,
-          label: Text(
-            'Contribution settings',
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w400,
-            ),
+      borderRadius: primaryBorderRadius,
+      padding: EdgeInsets.zero,
+      minSize: 30,
+      foregroundColor: colorTextSecondary,
+      child: const IconLabel(
+        horizontalSpacing: 2,
+        label: Text(
+          'Contribution settings',
+          style: TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.w400,
           ),
-          rightIcon: Icon(
-            Octicons.triangle_down,
-            size: 10,
-          ),
+        ),
+        rightIcon: Icon(
+          Octicons.triangle_down,
+          size: 10,
         ),
       ),
     );
