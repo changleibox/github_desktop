@@ -17,11 +17,11 @@ const _scrollBehavior = ScrollBehavior();
 void main() {
   runApp(DesktopApp());
   doWhenWindowReady(() {
-    const size = Size(1300, 900);
-    appWindow.title = 'GitHub桌面版';
+    final size = Size(1273, appWindow.rect.height);
     appWindow.minSize = size;
     appWindow.size = size;
     appWindow.alignment = Alignment.center;
+    appWindow.title = 'GitHub桌面版';
     appWindow.show();
   });
 }
