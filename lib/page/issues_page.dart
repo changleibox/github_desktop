@@ -40,6 +40,9 @@ class _IssuesPageState extends State<IssuesPage> {
 
   String _queryParams({String inputQuery, bool isOpen = true}) {
     assert(isOpen != null);
+    if (!mounted) {
+      return null;
+    }
     final userModel = context.read<UserModel>();
     final viewer = userModel.viewer;
 
@@ -85,6 +88,9 @@ class _IssuesPageState extends State<IssuesPage> {
   }
 
   Future<int> _retrieveAssignedIssuesCount(String query) async {
+    if (!mounted) {
+      return 0;
+    }
     final userModel = context.read<UserModel>();
     final response = await userModel.request(AssignedIssues((b) {
       return b

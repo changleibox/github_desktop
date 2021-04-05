@@ -41,6 +41,9 @@ class _PullRequestsPageState extends State<PullRequestsPage> {
 
   String _queryParams({String inputQuery, bool isOpen = true}) {
     assert(isOpen != null);
+    if (!mounted) {
+      return null;
+    }
     final userModel = context.read<UserModel>();
     final viewer = userModel.viewer;
 
@@ -86,6 +89,9 @@ class _PullRequestsPageState extends State<PullRequestsPage> {
   }
 
   Future<int> _retrievePullRequestsCount(String query) async {
+    if (!mounted) {
+      return 0;
+    }
     final userModel = context.read<UserModel>();
     final response = await userModel.request(AssignedPullRequests((b) {
       return b
