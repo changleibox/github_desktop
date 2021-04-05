@@ -57,6 +57,9 @@ class _IssuesPageState extends State<IssuesPage> {
       _openedCount = await _retrieveAssignedIssuesCount(_queryParams(inputQuery: inputQuery, isOpen: true));
       _closedCount = await _retrieveAssignedIssuesCount(_queryParams(inputQuery: inputQuery, isOpen: false));
     }
+    if (!mounted) {
+      return;
+    }
     setState(() {});
   }
 

@@ -58,6 +58,9 @@ class _PullRequestsPageState extends State<PullRequestsPage> {
       _openedCount = await _retrievePullRequestsCount(_queryParams(inputQuery: inputQuery, isOpen: true));
       _closedCount = await _retrievePullRequestsCount(_queryParams(inputQuery: inputQuery, isOpen: false));
     }
+    if (!mounted) {
+      return;
+    }
     setState(() {});
   }
 
