@@ -8,7 +8,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttericon/octicons_icons.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/model/user_model.dart';
+import 'package:github_desktop/widget/hover_button.dart';
 import 'package:github_desktop/widget/hover_outline_button.dart';
+import 'package:github_desktop/widget/hover_region.dart';
 import 'package:provider/provider.dart';
 
 /// Created by changlei on 3/10/21.
@@ -85,85 +87,103 @@ class _UserInfo extends StatelessWidget {
         const SizedBox(
           height: 16,
         ),
-        Text.rich(
-          TextSpan(
-            children: [
-              const WidgetSpan(
-                child: Icon(
+        WidgetGroup(
+          divider: const Text(' · '),
+          children: <Widget>[
+            HoverButton(
+              onPressed: () {},
+              foregroundColor: colorTextSecondary,
+              child: IconLabel(
+                horizontalSpacing: 4,
+                leftIcon: const Icon(
                   Octicons.person,
-                  size: 16,
-                  color: colorTextSecondary,
+                  size: 14,
+                ),
+                rightIcon: const Text(
+                  'followers',
+                ),
+                label: Builder(
+                  builder: (context) {
+                    final hover = HoverScope.of(context);
+                    final style = DefaultTextStyle.of(context).style;
+                    return Text(
+                      followersCount.toString(),
+                      style: style.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: hover ? null : colorTextPrimary,
+                      ),
+                    );
+                  },
                 ),
               ),
-              TextSpan(
-                text: ' $followersCount ',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
+            ),
+            HoverButton(
+              onPressed: () {},
+              foregroundColor: colorTextSecondary,
+              child: IconLabel(
+                horizontalSpacing: 4,
+                leftIcon: Builder(
+                  builder: (context) {
+                    final hover = HoverScope.of(context);
+                    final style = DefaultTextStyle.of(context).style;
+                    return Text(
+                      followingCount.toString(),
+                      style: style.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: hover ? null : colorTextPrimary,
+                      ),
+                    );
+                  },
+                ),
+                label: const Text(
+                  'following',
                 ),
               ),
-              const TextSpan(
-                text: 'followers',
-              ),
-              const TextSpan(
-                text: ' · ',
-              ),
-              TextSpan(
-                text: '$followingCount',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                ),
-              ),
-              const TextSpan(
-                text: ' following',
-              ),
-              const TextSpan(
-                text: ' · ',
-              ),
-              const WidgetSpan(
-                child: Icon(
+            ),
+            HoverButton(
+              onPressed: () {},
+              foregroundColor: colorTextSecondary,
+              child: IconLabel(
+                horizontalSpacing: 4,
+                leftIcon: const Icon(
                   Octicons.star,
-                  size: 16,
-                  color: colorTextSecondary,
+                  size: 14,
                 ),
-              ),
-              TextSpan(
-                text: ' $starredRepositoriesCount',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                ),
-              ),
-            ],
-          ),
-          style: const TextStyle(
-            fontSize: 14,
-            color: colorTextSecondary,
-          ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Row(
-          children: [
-            const Icon(
-              Octicons.location,
-              size: 16,
-              color: colorTextTertiary,
-            ),
-            const SizedBox(
-              width: 8,
-            ),
-            Flexible(
-              child: Text(
-                viewer?.location ?? 'Unknown',
-                style: const TextStyle(
-                  fontSize: 14,
+                label: Builder(
+                  builder: (context) {
+                    final hover = HoverScope.of(context);
+                    final style = DefaultTextStyle.of(context).style;
+                    return Text(
+                      starredRepositoriesCount.toString(),
+                      style: style.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: hover ? null : colorTextPrimary,
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
           ],
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        IconLabel(
+          horizontalSpacing: 4,
+          leftIcon: const Icon(
+            Octicons.location,
+            size: 16,
+            color: colorTextTertiary,
+          ),
+          label: Flexible(
+            child: Text(
+              viewer?.location ?? 'Unknown',
+              style: const TextStyle(
+                fontSize: 14,
+              ),
+            ),
+          ),
         ),
       ],
     );

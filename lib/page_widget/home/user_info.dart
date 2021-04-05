@@ -2,6 +2,7 @@
  * Copyright (c) 2021 CHANGLEI. All rights reserved.
  */
 
+import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/model/user_model.dart';
@@ -9,6 +10,7 @@ import 'package:github_desktop/page_widget/home/edit_profile.dart';
 import 'package:github_desktop/widget/divider.dart';
 import 'package:github_desktop/widget/github_user.dart';
 import 'package:fluttericon/octicons_icons.dart';
+import 'package:github_desktop/widget/hover_button.dart';
 import 'package:provider/provider.dart';
 
 /// Created by changlei on 3/8/21.
@@ -67,25 +69,25 @@ class UserInfo extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            Row(
-              children: const [
-                Icon(
+            HoverButton(
+              onPressed: () {},
+              child: const IconLabel(
+                horizontalSpacing: 4,
+                leftIcon: Icon(
                   Octicons.north_star,
                   size: 16,
                   color: colorTextTertiary,
                 ),
-                SizedBox(
-                  width: 4,
-                ),
-                Flexible(
+                label: Flexible(
                   child: Text(
                     'Arctic Code Vault Contributor',
                     style: TextStyle(
                       fontSize: 14,
+                      color: colorTextPrimary,
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
           ],
         ),

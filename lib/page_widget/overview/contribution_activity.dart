@@ -10,6 +10,7 @@ import 'package:github_desktop/model/user_model.dart';
 import 'package:github_desktop/widget/divider.dart';
 import 'package:github_desktop/widget/hover_button.dart';
 import 'package:github_desktop/widget/hover_outline_button.dart';
+import 'package:github_desktop/widget/language_circle_point.dart';
 import 'package:github_desktop/widget/vertical_tab_layout.dart';
 import 'package:provider/provider.dart';
 
@@ -347,28 +348,17 @@ class _RepositoriesActivity extends StatelessWidget {
                 ),
                 Container(
                   width: 116,
-                  child: IconLabel(
+                  child: const IconLabel(
                     alignment: MainAxisAlignment.start,
                     horizontalSpacing: 4,
-                    label: const Text(
+                    leftIcon: LanguageCirclePoint(
+                      language: null,
+                    ),
+                    label: Text(
                       'Dart',
                       style: TextStyle(
                         fontSize: 12,
                         color: colorTextSecondary,
-                      ),
-                    ),
-                    leftIcon: Container(
-                      width: 12,
-                      height: 12,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: const ShapeDecoration(
-                        color: Color(0xffcccccc),
-                        shape: CircleBorder(
-                          side: BorderSide(
-                            color: colorRepoLanguageColorBorder,
-                            width: 1,
-                          ),
-                        ),
                       ),
                     ),
                   ),

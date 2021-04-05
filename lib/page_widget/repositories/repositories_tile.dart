@@ -14,6 +14,7 @@ import 'package:github_desktop/util/launch_utils.dart';
 import 'package:github_desktop/widget/auto_update_date.dart';
 import 'package:github_desktop/widget/hover_outline_button.dart';
 import 'package:github_desktop/widget/hover_region.dart';
+import 'package:github_desktop/widget/language_circle_point.dart';
 import 'package:github_desktop/widget/list_tile.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttericon/octicons_icons.dart';
@@ -109,23 +110,8 @@ class RepositoriesTile extends StatelessWidget {
                     children: [
                       if (nodes?.isNotEmpty == true)
                         IconLabel(
-                          leftIcon: Container(
-                            width: 12,
-                            height: 12,
-                            clipBehavior: Clip.antiAlias,
-                            decoration: ShapeDecoration(
-                              color: Color(
-                                int.tryParse(
-                                  nodes.first.color?.replaceFirst('#', '0xff') ?? '0xffcccccc',
-                                ),
-                              ),
-                              shape: const CircleBorder(
-                                side: BorderSide(
-                                  color: colorRepoLanguageColorBorder,
-                                  width: 1,
-                                ),
-                              ),
-                            ),
+                          leftIcon: LanguageCirclePoint(
+                            language: nodes.first,
                           ),
                           label: Text(
                             nodes.first.name,

@@ -17,6 +17,7 @@ import 'package:github_desktop/util/launch_utils.dart';
 import 'package:github_desktop/widget/future_wrapper_view.dart';
 import 'package:github_desktop/widget/grid_layout.dart';
 import 'package:github_desktop/widget/hover_button.dart';
+import 'package:github_desktop/widget/language_circle_point.dart';
 import 'package:provider/provider.dart';
 
 /// Created by box on 3/27/21.
@@ -140,6 +141,8 @@ class _RepositoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final nodes = item.languages.nodes;
+    final forkCount = item.isFork ? item.parent.forkCount : item.forkCount;
     return Container(
       decoration: primaryBorderDecoration,
       padding: const EdgeInsets.all(16),
@@ -173,97 +176,62 @@ class _RepositoryItem extends StatelessWidget {
                 ),
               ),
             ),
-          Builder(builder: (context) {
-            final style = DefaultTextStyle.of(context).style;
-            final nodes = item.languages.nodes;
-            final forkCount = item.isFork ? item.parent.forkCount : item.forkCount;
-            return DefaultTextStyle(
-              style: style.copyWith(
-                fontSize: 12,
-              ),
-              child: IconTheme(
-                data: const IconThemeData(
-                  color: colorTextSecondary,
-                  size: 14,
+          WidgetGroup.spacing(
+            spacing: 16,
+            children: [
+              if (nodes?.isNotEmpty == true)
+                IconLabel(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  horizontalSpacing: 4,
+                  leftIcon: LanguageCirclePoint(
+                    language: nodes.first,
+                  ),
+                  label: Text(
+                    nodes.first.name,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: colorTextSecondary,
+                    ),
+                  ),
                 ),
-                child: Row(
-                  children: [
-                    if (nodes?.isNotEmpty == true)
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          right: 16,
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 12,
-                              height: 12,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: ShapeDecoration(
-                                color: Color(
-                                  int.tryParse(
-                                    nodes.first.color?.replaceFirst('#', '0xff') ?? '0xffcccccc',
-                                  ),
-                                ),
-                                shape: const CircleBorder(
-                                  side: BorderSide(
-                                    color: colorRepoLanguageColorBorder,
-                                    width: 1,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 4,
-                            ),
-                            Text(
-                              nodes.first.name,
-                            ),
-                          ],
-                        ),
+              if (item.stargazers.totalCount > 0)
+                HoverButton(
+                  onPressed: () {},
+                  foregroundColor: colorTextSecondary,
+                  child: IconLabel(
+                    horizontalSpacing: 4,
+                    leftIcon: const Icon(
+                      CupertinoIcons.star,
+                      size: 14,
+                    ),
+                    label: Text(
+                      '${item.stargazers.totalCount}',
+                      style: const TextStyle(
+                        fontSize: 12,
                       ),
-                    if (item.stargazers.totalCount > 0)
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          right: 16,
-                        ),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              CupertinoIcons.star,
-                              size: 14,
-                            ),
-                            const SizedBox(
-                              width: 4,
-                            ),
-                            Text('${item.stargazers.totalCount}'),
-                          ],
-                        ),
-                      ),
-                    if (forkCount > 0)
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          right: 16,
-                        ),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Octicons.repo_forked,
-                              size: 14,
-                            ),
-                            const SizedBox(
-                              width: 4,
-                            ),
-                            Text('$forkCount'),
-                          ],
-                        ),
-                      ),
-                  ],
+                    ),
+                  ),
                 ),
-              ),
-            );
-          }),
+              if (forkCount > 0)
+                HoverButton(
+                  onPressed: () {},
+                  foregroundColor: colorTextSecondary,
+                  child: IconLabel(
+                    horizontalSpacing: 4,
+                    leftIcon: const Icon(
+                      Octicons.repo_forked,
+                      size: 14,
+                    ),
+                    label: Text(
+                      '$forkCount',
+                      style: const TextStyle(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ],
       ),
     );

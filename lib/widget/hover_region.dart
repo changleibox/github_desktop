@@ -58,7 +58,35 @@ class _HoverRegionState extends State<HoverRegion> {
           _hovered = false;
         });
       },
-      child: widget.builder(context, widget.child, _hovered),
+      child: HoverScope(
+        hovered: _hovered,
+        child: widget.builder(context, widget.child, _hovered),
+      ),
     );
+  }
+}
+
+/// 下穿[hovered]
+class HoverScope extends InheritedWidget {
+  /// 构造函数
+  const HoverScope({
+    Key key,
+    @required Widget child,
+    @required this.hovered,
+  })  : assert(child != null),
+        assert(hovered != null),
+        super(key: key, child: child);
+
+  /// 鼠标是否在悬浮在[child]上
+  final bool hovered;
+
+  /// 获取[hovered]
+  static bool of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<HoverScope>()?.hovered;
+  }
+
+  @override
+  bool updateShouldNotify(HoverScope oldWidget) {
+    return oldWidget.hovered != hovered;
   }
 }
