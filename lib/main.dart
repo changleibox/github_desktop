@@ -2,7 +2,9 @@
  * Copyright (c) 2021 CHANGLEI. All rights reserved.
  */
 
+import 'dart:ui';
 
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:github_desktop/common/resources.dart';
@@ -14,6 +16,14 @@ const _scrollBehavior = ScrollBehavior();
 
 void main() {
   runApp(DesktopApp());
+  doWhenWindowReady(() {
+    const size = Size(1300, 900);
+    appWindow.title = 'GitHub桌面版';
+    appWindow.minSize = size;
+    appWindow.size = size;
+    appWindow.alignment = Alignment.center;
+    appWindow.show();
+  });
 }
 
 /// Created by changlei on 2021/03/05.
@@ -46,6 +56,7 @@ class DesktopApp extends StatelessWidget {
               ),
             ),
             localizationsDelegates: const [
+              DefaultCupertinoLocalizations.delegate,
               DefaultMaterialLocalizations.delegate,
             ],
             initialRoute: RouteName.main,

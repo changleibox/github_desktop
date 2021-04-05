@@ -42,11 +42,12 @@ dependencies:
   fluttericon: ^2.0.0
   provider: ^4.3.2
   intl: ^0.17.0
-  shared_preferences: ^0.5.12+4
+  shared_preferences: ^2.0.5
   flutter_svg: ^0.19.3
   flatterer:
     git: https://github.com/changleibox/flatterer.git
   syncfusion_flutter_charts: ^18.4.49
+  bitsdojo_window: ^0.1.0
 
 dev_dependencies:
   flutter_test:
