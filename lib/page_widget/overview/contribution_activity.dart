@@ -394,14 +394,17 @@ class _IssuesTimeline extends StatelessWidget {
           height: 28,
           alignment: Alignment.center,
           child: WidgetGroup(
+            alignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              const Text(
-                'Created an issue in flutter/flutter that received 5 comments',
-                style: TextStyle(
-                  fontSize: 16,
+              const Flexible(
+                child: Text(
+                  'Created an issue in flutter/flutter that received 5 comments',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
               ),
-              const Spacer(),
               HoverButton(
                 onPressed: () {},
                 foregroundColor: colorTextTertiary,
