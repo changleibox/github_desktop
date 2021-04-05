@@ -165,11 +165,12 @@ class _ViewerStatusState extends State<ViewerStatus> with SingleTickerProviderSt
         return Positioned(
           left: rect.left,
           top: rect.top,
-          child: MouseRegion(
-            onExit: _onExit,
-            child: CompositedTransformFollower(
-              link: _link,
-              showWhenUnlinked: false,
+          child: CompositedTransformFollower(
+            link: _link,
+            showWhenUnlinked: false,
+            child: MouseRegion(
+              onExit: _onExit,
+              opaque: false,
               child: AnimatedBuilder(
                 animation: animation,
                 builder: (context, child) {
