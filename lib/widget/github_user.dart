@@ -118,6 +118,8 @@ class ViewerStatus extends StatefulWidget {
 }
 
 class _ViewerStatusState extends State<ViewerStatus> with SingleTickerProviderStateMixin {
+  final _link = LayerLink();
+
   AnimatedOverlay _overlay;
 
   @override
@@ -142,15 +144,19 @@ class _ViewerStatusState extends State<ViewerStatus> with SingleTickerProviderSt
           top: rect.top,
           child: MouseRegion(
             onExit: _onExit,
-            child: AnimatedBuilder(
-              animation: animation,
-              builder: (context, child) {
-                return ViewerStatus(
-                  status: widget.status,
-                  showMessage: true,
-                  animation: animation,
-                );
-              },
+            child: CompositedTransformFollower(
+              link: _link,
+              showWhenUnlinked: false,
+              child: AnimatedBuilder(
+                animation: animation,
+                builder: (context, child) {
+                  return ViewerStatus(
+                    status: widget.status,
+                    showMessage: true,
+                    animation: animation,
+                  );
+                },
+              ),
             ),
           ),
         );
@@ -162,7 +168,10 @@ class _ViewerStatusState extends State<ViewerStatus> with SingleTickerProviderSt
   }
 
   void _hideViewerStatus() {
-    _overlay?.remove();
+    _overlay?.remove(
+      transitionDuration: _duration,
+      curve: Curves.easeOut,
+    );
     _overlay = null;
   }
 
@@ -224,34 +233,37 @@ class _ViewerStatusState extends State<ViewerStatus> with SingleTickerProviderSt
         ),
       );
     }
-    return MouseRegion(
-      onEnter: _onEnter,
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        height: _statusSize,
-        constraints: const BoxConstraints(
-          minWidth: _statusSize,
-        ),
-        decoration: ShapeDecoration(
-          color: CupertinoColors.white,
-          shape: const StadiumBorder(
-            side: BorderSide(
-              color: CupertinoColors.separator,
-              width: 0,
-            ),
+    return CompositedTransformTarget(
+      link: _link,
+      child: MouseRegion(
+        onEnter: _onEnter,
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          height: _statusSize,
+          constraints: const BoxConstraints(
+            minWidth: _statusSize,
           ),
-          shadows: [
-            if (widget.showMessage)
-              BoxShadow(
-                color: const Color.fromRGBO(0, 0, 0, 0.1),
-                spreadRadius: 4 * animatedValue,
-                blurRadius: 10 * animatedValue,
-                offset: const Offset(0, 0),
+          decoration: ShapeDecoration(
+            color: CupertinoColors.white,
+            shape: const StadiumBorder(
+              side: BorderSide(
+                color: CupertinoColors.separator,
+                width: 0,
               ),
-          ],
+            ),
+            shadows: [
+              if (widget.showMessage)
+                BoxShadow(
+                  color: const Color.fromRGBO(0, 0, 0, 0.1),
+                  spreadRadius: 4 * animatedValue,
+                  blurRadius: 10 * animatedValue,
+                  offset: const Offset(0, 0),
+                ),
+            ],
+          ),
+          alignment: Alignment.center,
+          child: child,
         ),
-        alignment: Alignment.center,
-        child: child,
       ),
     );
   }
