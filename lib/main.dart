@@ -32,7 +32,7 @@ class DesktopApp extends StatelessWidget {
       child: Consumer<UserModel>(
         builder: (context, value, child) {
           return CupertinoApp(
-            title: 'GitHub',
+            title: 'GitHub桌面版',
             theme: CupertinoThemeData(
               primaryColor: primaryColor,
               brightness: Brightness.light,
