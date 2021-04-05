@@ -30,9 +30,10 @@ class UserInfo extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const GithubUser(
+            GithubUser(
               size: 269,
               hasStatus: true,
+              onChangeAvatar: (value) {},
             ),
             const SizedBox(
               height: 16,

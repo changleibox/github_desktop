@@ -12,7 +12,9 @@ import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/github_gql/github_queries.data.gql.dart';
 import 'package:github_desktop/model/user_model.dart';
 import 'package:github_desktop/util/html_utils.dart';
+import 'package:github_desktop/widget/cupertino_text_button.dart';
 import 'package:github_desktop/widget/hover_button.dart';
+import 'package:github_desktop/widget/support_tooltip.dart';
 import 'package:provider/provider.dart';
 
 const _statusSize = 36.0;
@@ -28,6 +30,7 @@ class GithubUser extends StatelessWidget {
     this.size = 32,
     this.hasName = false,
     this.hasStatus = false,
+    this.onChangeAvatar,
   })  : assert(hasName != null),
         assert(hasStatus != null),
         super(key: key);
@@ -41,6 +44,9 @@ class GithubUser extends StatelessWidget {
   /// 是否显示状态
   final bool hasStatus;
 
+  /// 改变avatar
+  final ValueChanged<$ViewerDetail$viewer> onChangeAvatar;
+
   @override
   Widget build(BuildContext context) {
     final userModel = context.read<UserModel>();
@@ -53,6 +59,27 @@ class GithubUser extends StatelessWidget {
     if (viewer == null) {
       return icon;
     }
+    Widget avatar = ClipOval(
+      child: CachedNetworkImage(
+        imageUrl: viewer.avatarUrl.value,
+        width: size,
+        height: size,
+        fit: BoxFit.cover,
+        placeholder: (context, url) => icon,
+        errorWidget: (context, url, dynamic error) => icon,
+      ),
+    );
+    if (onChangeAvatar != null) {
+      avatar = SupportTooltip(
+        message: const Text(
+          'Change your avatar',
+        ),
+        cursor: SystemMouseCursors.click,
+        child: CupertinoTextButton(
+          child: avatar,
+        ),
+      );
+    }
     return WidgetGroup.spacing(
       alignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -60,16 +87,7 @@ class GithubUser extends StatelessWidget {
       children: [
         Stack(
           children: [
-            ClipOval(
-              child: CachedNetworkImage(
-                imageUrl: viewer.avatarUrl.value,
-                width: size,
-                height: size,
-                fit: BoxFit.cover,
-                placeholder: (context, url) => icon,
-                errorWidget: (context, url, dynamic error) => icon,
-              ),
-            ),
+            avatar,
             if (hasStatus)
               Positioned(
                 right: 0,

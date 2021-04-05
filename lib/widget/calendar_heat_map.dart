@@ -8,7 +8,7 @@ import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:github_desktop/common/resources.dart';
-import 'package:github_desktop/widget/hover_region.dart';
+import 'package:github_desktop/widget/support_tooltip.dart';
 import 'package:intl/intl.dart';
 
 /// 构建dateTime控件
@@ -162,33 +162,15 @@ class _CalendarChart extends StatelessWidget {
               }
               decoration = _decoration(color);
             }
-            final key = GlobalKey<OverlayWindowAnchorState>();
-            return OverlayWindowAnchor(
-              key: key,
-              backgroundColor: const Color.fromRGBO(0, 0, 0, 0.8),
-              indicateSize: const Size(14, 7),
-              borderRadius: primaryBorderRadius,
-              builder: (context) {
-                return _Tooltip(
-                  dateTime: dateTime,
-                  value: value,
-                );
-              },
-              child: HoverRegion(
-                builder: (context, child, hover) {
-                  if (hover && value != null) {
-                    if (!key.currentState.isShowing) {
-                      key.currentState.show();
-                    }
-                  } else {
-                    key.currentState.dismiss();
-                  }
-                  return Container(
-                    width: _size,
-                    height: _size,
-                    decoration: decoration,
-                  );
-                },
+            return SupportTooltip(
+              message: _Tooltip(
+                dateTime: dateTime,
+                value: value,
+              ),
+              child: Container(
+                width: _size,
+                height: _size,
+                decoration: decoration,
               ),
             );
           },
@@ -221,35 +203,23 @@ class _Tooltip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        borderRadius: primaryBorderRadius,
-      ),
-      padding: const EdgeInsets.all(10),
-      child: DefaultTextStyle(
-        style: const TextStyle(
-          fontSize: 12,
-          color: Color(0xffdfe2e5),
+    return WidgetGroup(
+      mainAxisSize: MainAxisSize.min,
+      divider: const Text(' '),
+      children: [
+        Text(
+          '${value == null || value == 0 ? 'No' : value.toString()} contribution',
+          style: const TextStyle(
+            fontWeight: FontWeight.w600,
+          ),
         ),
-        child: WidgetGroup(
-          mainAxisSize: MainAxisSize.min,
-          divider: const Text(' '),
-          children: [
-            Text(
-              '${value == null || value == 0 ? 'No' : value.toString()} contribution',
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            Text(
-              'on ${DateFormat.yMMMMd().format(dateTime)}',
-              style: const TextStyle(
-                color: Color(0xff959da5),
-              ),
-            ),
-          ],
+        Text(
+          'on ${DateFormat.yMMMMd().format(dateTime)}',
+          style: const TextStyle(
+            color: Color(0xff959da5),
+          ),
         ),
-      ),
+      ],
     );
   }
 }
