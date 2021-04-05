@@ -8,10 +8,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/octicons_icons.dart';
+import 'package:github_desktop/common/github_oauth_credentials.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/github_gql/github_queries.data.gql.dart';
 import 'package:github_desktop/model/user_model.dart';
 import 'package:github_desktop/util/html_utils.dart';
+import 'package:github_desktop/util/launch_utils.dart';
 import 'package:github_desktop/widget/cupertino_text_button.dart';
 import 'package:github_desktop/widget/hover_button.dart';
 import 'package:github_desktop/widget/support_tooltip.dart';
@@ -59,15 +61,13 @@ class GithubUser extends StatelessWidget {
     if (viewer == null) {
       return icon;
     }
-    Widget avatar = ClipOval(
-      child: CachedNetworkImage(
-        imageUrl: viewer.avatarUrl.value,
-        width: size,
-        height: size,
-        fit: BoxFit.cover,
-        placeholder: (context, url) => icon,
-        errorWidget: (context, url, dynamic error) => icon,
-      ),
+    Widget avatar = CachedNetworkImage(
+      imageUrl: viewer.avatarUrl.value,
+      width: size,
+      height: size,
+      fit: BoxFit.cover,
+      placeholder: (context, url) => icon,
+      errorWidget: (context, url, dynamic error) => icon,
     );
     if (onChangeAvatar != null) {
       avatar = SupportTooltip(
@@ -76,6 +76,9 @@ class GithubUser extends StatelessWidget {
         ),
         cursor: SystemMouseCursors.click,
         child: CupertinoTextButton(
+          onPressed: () {
+            LaunchUtils.launchUrl(context, settingsUrl);
+          },
           child: avatar,
         ),
       );
@@ -87,7 +90,9 @@ class GithubUser extends StatelessWidget {
       children: [
         Stack(
           children: [
-            avatar,
+            ClipOval(
+              child: avatar,
+            ),
             if (hasStatus)
               Positioned(
                 right: 0,
