@@ -48,7 +48,7 @@ class CupertinoTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = CupertinoColors.systemBlue;
+    const color = CupertinoColors.systemBlue;
     return CupertinoButton(
       padding: padding,
       minSize: 0,
