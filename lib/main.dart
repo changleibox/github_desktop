@@ -17,7 +17,7 @@ const _scrollBehavior = ScrollBehavior();
 void main() {
   runApp(DesktopApp());
   doWhenWindowReady(() {
-    final size = Size(1273, appWindow.rect.height);
+    const size = Size(1273, double.maxFinite);
     appWindow.minSize = size;
     appWindow.size = size;
     appWindow.alignment = Alignment.center;
