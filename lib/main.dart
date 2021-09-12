@@ -12,8 +12,6 @@ import 'package:github_desktop/model/user_model.dart';
 import 'package:github_desktop/system/route.dart';
 import 'package:provider/provider.dart';
 
-const _scrollBehavior = ScrollBehavior();
-
 void main() {
   runApp(DesktopApp());
   doWhenWindowReady(() {
@@ -61,10 +59,6 @@ class DesktopApp extends StatelessWidget {
             ],
             initialRoute: RouteName.main,
             routes: RouteProvider.routes,
-            scrollBehavior: _scrollBehavior.copyWith(
-              scrollbars: false,
-              platform: TargetPlatform.macOS,
-            ),
           );
         },
       ),
