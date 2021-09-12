@@ -4,11 +4,11 @@
 
 import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:fluttericon/octicons_icons.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/system/route.dart';
 import 'package:github_desktop/widget/action_bar_search.dart';
 import 'package:github_desktop/widget/action_bar_user.dart';
-import 'package:fluttericon/octicons_icons.dart';
 import 'package:github_desktop/widget/hover_button.dart';
 
 const _actionTextStyle = TextStyle(

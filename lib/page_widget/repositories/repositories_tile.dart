@@ -8,6 +8,8 @@ import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttericon/octicons_icons.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/github_gql/github_queries.data.gql.dart';
 import 'package:github_desktop/util/launch_utils.dart';
@@ -16,8 +18,6 @@ import 'package:github_desktop/widget/hover_outline_button.dart';
 import 'package:github_desktop/widget/hover_region.dart';
 import 'package:github_desktop/widget/language_circle_point.dart';
 import 'package:github_desktop/widget/list_tile.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttericon/octicons_icons.dart';
 
 /// Created by changlei on 3/8/21.
 ///

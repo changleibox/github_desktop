@@ -3,9 +3,8 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-
 import 'package:github_desktop/third_party/github_graphql_schema/schema.docs.schema.gql.dart' as gql;
+import 'package:intl/intl.dart';
 
 /// Created by box on 3/6/21.
 ///

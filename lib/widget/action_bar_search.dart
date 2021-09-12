@@ -4,12 +4,12 @@
 
 import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttericon/octicons_icons.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/widget/divider.dart';
 import 'package:github_desktop/widget/hover_button.dart';
 import 'package:github_desktop/widget/support_dropdown_menu.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttericon/octicons_icons.dart';
 
 const _collapsedWidth = 270.0;
 const _expandedWidth = _collapsedWidth * 2;

@@ -4,12 +4,12 @@
 
 import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:fluttericon/octicons_icons.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/model/user_model.dart';
 import 'package:github_desktop/page_widget/home/edit_profile.dart';
 import 'package:github_desktop/widget/divider.dart';
 import 'package:github_desktop/widget/github_user.dart';
-import 'package:fluttericon/octicons_icons.dart';
 import 'package:github_desktop/widget/hover_button.dart';
 import 'package:provider/provider.dart';
 

@@ -3,11 +3,11 @@
  */
 
 import 'package:flutter/cupertino.dart';
+import 'package:fluttericon/octicons_icons.dart';
 import 'package:github_desktop/common/github_oauth_credentials.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/system/route.dart';
 import 'package:github_desktop/widget/github_login.dart';
-import 'package:fluttericon/octicons_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:window_to_front/window_to_front.dart';
 

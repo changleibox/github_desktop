@@ -4,10 +4,10 @@
 
 import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:fluttericon/octicons_icons.dart';
 import 'package:github_desktop/common/resources.dart';
 import 'package:github_desktop/widget/hover_outline_button.dart';
 import 'package:github_desktop/widget/prefix_filter_button.dart';
-import 'package:fluttericon/octicons_icons.dart';
 
 const _types = <String>['All', 'Public', 'Private', 'Sources', 'Forks', 'Archived', 'Mirrors'];
 

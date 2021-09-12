@@ -6,6 +6,7 @@ import 'dart:async';
 
 import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:fluttericon/octicons_icons.dart';
 import 'package:github_desktop/github_gql/github_queries.data.gql.dart';
 import 'package:github_desktop/github_gql/github_queries.req.gql.dart';
 import 'package:github_desktop/model/user_model.dart';
@@ -18,7 +19,6 @@ import 'package:github_desktop/widget/footer_bar.dart';
 import 'package:github_desktop/widget/future_list_view.dart';
 import 'package:github_desktop/widget/github_action_bar.dart';
 import 'package:github_desktop/widget/pro_tip.dart';
-import 'package:fluttericon/octicons_icons.dart';
 import 'package:provider/provider.dart';
 
 /// Created by changlei on 3/8/21.

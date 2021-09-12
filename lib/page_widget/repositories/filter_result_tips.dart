@@ -4,8 +4,8 @@
 
 import 'package:flatterer/flatterer.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:github_desktop/common/resources.dart';
 import 'package:fluttericon/octicons_icons.dart';
+import 'package:github_desktop/common/resources.dart';
 
 /// Created by changlei on 3/10/21.
 ///
